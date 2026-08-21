@@ -1,0 +1,210 @@
+/* ==========================================================================
+   Maha Academy — Shared Brand Stylesheet
+   Used by every game/lesson page. Keep this file limited to things that
+   repeat across the whole site: colors, type, buttons, cards, the star
+   reward system, and layout helpers. Page-specific layout belongs in the
+   page's own <style> block, not here.
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Baloo+Bhaijaan+2:wght@500;600;700;800&display=swap');
+
+:root {
+  /* Brand palette (from the four Maha Academy characters) */
+  --ma-purple: #6B3FA0;
+  --ma-purple-dark: #4E2C78;
+  --ma-purple-light: #F1E9F9;
+  --ma-maroon: #7A2E3A;
+  --ma-gold: #F5B700;
+  --ma-gold-dark: #D69E00;
+  --ma-teal: #2CA6A4;
+  --ma-coral: #E85D75;
+  --ma-navy: #1F2A44;
+
+  --ma-ink: #2B2438;
+  --ma-ink-soft: #6A6178;
+  --ma-bg: #FBF8FF;
+  --ma-card: #FFFFFF;
+  --ma-border: #E4D9F3;
+
+  --ma-radius-lg: 24px;
+  --ma-radius-md: 16px;
+  --ma-radius-pill: 999px;
+
+  --ma-shadow: 0 8px 24px rgba(107, 63, 160, 0.15);
+  --ma-shadow-soft: 0 4px 12px rgba(107, 63, 160, 0.10);
+
+  --ma-font: 'Baloo 2', 'Baloo Bhaijaan 2', 'Segoe UI', sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+body.ma-app {
+  margin: 0;
+  font-family: var(--ma-font);
+  background: var(--ma-bg);
+  color: var(--ma-ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+[dir="rtl"].ma-app, .ma-app[dir="rtl"] { font-family: 'Baloo Bhaijaan 2', var(--ma-font); }
+
+.ma-container {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 20px 20px 60px;
+}
+
+/* ---------- Header / brand bar ---------- */
+.ma-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 20px;
+  background: linear-gradient(135deg, var(--ma-purple), var(--ma-purple-dark));
+  color: #fff;
+  box-shadow: var(--ma-shadow);
+}
+
+.ma-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 800;
+  font-size: 1.25rem;
+  letter-spacing: 0.2px;
+}
+
+.ma-brand-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--ma-gold);
+  box-shadow: 0 0 0 4px rgba(245,183,0,0.25);
+}
+
+/* ---------- Star / progress system ---------- */
+.ma-stars {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255,255,255,0.15);
+  padding: 6px 14px;
+  border-radius: var(--ma-radius-pill);
+  font-weight: 700;
+}
+
+.ma-star {
+  font-size: 1.1rem;
+  color: rgba(255,255,255,0.35);
+  transition: color 0.3s, transform 0.3s;
+}
+
+.ma-star.earned {
+  color: var(--ma-gold);
+  transform: scale(1.15);
+  text-shadow: 0 0 8px rgba(245,183,0,0.7);
+}
+
+@keyframes ma-pop {
+  0%   { transform: scale(0.4); opacity: 0; }
+  60%  { transform: scale(1.3); opacity: 1; }
+  100% { transform: scale(1); }
+}
+.ma-star.just-earned { animation: ma-pop 0.5s ease-out; }
+
+/* ---------- Cards / sections ---------- */
+.ma-card {
+  background: var(--ma-card);
+  border: 1px solid var(--ma-border);
+  border-radius: var(--ma-radius-lg);
+  box-shadow: var(--ma-shadow-soft);
+  padding: 24px;
+  margin: 24px 0;
+}
+
+.ma-section-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--ma-purple-dark);
+  margin: 0 0 6px;
+}
+
+.ma-section-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  background: var(--ma-gold);
+  color: #fff;
+  font-size: 1rem;
+}
+
+.ma-section-sub {
+  color: var(--ma-ink-soft);
+  margin: 0 0 18px;
+  font-size: 1rem;
+}
+
+/* ---------- Buttons ---------- */
+.ma-btn {
+  font-family: var(--ma-font);
+  border: none;
+  cursor: pointer;
+  border-radius: var(--ma-radius-pill);
+  padding: 10px 20px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.ma-btn:hover { transform: translateY(-2px); }
+.ma-btn:active { transform: translateY(0); }
+
+.ma-btn-primary {
+  background: var(--ma-purple);
+  color: #fff;
+  box-shadow: var(--ma-shadow-soft);
+}
+
+.ma-btn-play {
+  background: var(--ma-gold);
+  color: var(--ma-navy);
+  box-shadow: 0 4px 12px rgba(245,183,0,0.4);
+}
+
+.ma-pill {
+  font-family: var(--ma-font);
+  border: 2px solid var(--ma-teal);
+  background: #fff;
+  color: var(--ma-teal);
+  border-radius: var(--ma-radius-pill);
+  padding: 8px 16px;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: all 0.2s;
+}
+.ma-pill:hover { background: var(--ma-teal); color: #fff; }
+.ma-pill.found {
+  background: var(--ma-teal);
+  color: #fff;
+  opacity: 0.6;
+}
+.ma-pill.found::after { content: " \2713"; }
+
+/* ---------- Misc ---------- */
+.ma-footer-note {
+  text-align: center;
+  color: var(--ma-ink-soft);
+  font-size: 0.9rem;
+  margin-top: 30px;
+}
+
+.ma-hidden { display: none !important; }
+
+@media (max-width: 640px) {
+  .ma-container { padding: 12px 12px 40px; }
+  .ma-card { padding: 16px; }
+}

@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>أكاديمية مها | Maha Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --deep:#2E1A47; --mid:#5B3A8E; --gold:#D9A441; --goldlt:#F0C674;
+    --cream:#F5EFDD; --ink:#3A2A1E; --white:#FFFFFF;
+    /* one color per school stage, used on the grade tiles */
+    --kg-a:#F0C674;   --kg-b:#C99A2E;    /* الروضة: gold */
+    --elem-a:#E8607A; --elem-b:#B83A52;  /* ابتدائي: pinkish red */
+    --mstage-a:#3CAF8B; --mstage-b:#1F7A5C; /* متوسط: green */
+    --high-a:#4A5FBF; --high-b:#2E3A80;  /* ثانوي: indigo */
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Cairo',sans-serif;color:var(--ink);background:var(--cream);line-height:1.7;}
+
+  /* ---------- nav ---------- */
+  header{position:sticky;top:0;z-index:50;background:var(--deep);box-shadow:0 4px 14px rgba(0,0,0,0.25);}
+  nav{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;
+      padding:14px 24px;}
+  .brand{display:flex;align-items:center;gap:10px;}
+  .brand-title{color:var(--white);font-weight:900;font-size:22px;}
+  .brand-sub{color:var(--goldlt);font-size:12px;font-weight:600;letter-spacing:0.5px;}
+  nav ul{list-style:none;display:flex;gap:28px;flex-wrap:wrap;}
+  nav a{color:var(--cream);text-decoration:none;font-weight:600;font-size:15px;transition:color .2s;}
+  nav a:hover{color:var(--gold);}
+  @media(max-width:700px){
+    nav{flex-wrap:wrap;justify-content:center;gap:10px;padding:12px 16px;}
+    nav ul{gap:12px 18px;justify-content:center;font-size:13px;}
+  }
+
+  /* ---------- hero ---------- */
+  .hero{
+        background:
+          linear-gradient(160deg, rgba(46,26,71,.88) 0%, rgba(91,58,142,.78) 55%, rgba(138,90,58,.7) 100%),
+          url('assets/academy_hero_banner.jpg') center / cover no-repeat;
+        color:var(--white);text-align:center;padding:110px 24px 120px;position:relative;overflow:hidden;}
+  .hero h1{font-size:clamp(34px,6vw,58px);font-weight:900;margin-bottom:14px;text-shadow:0 3px 14px rgba(0,0,0,.4);}
+  .hero .slogan{font-size:clamp(20px,3vw,28px);color:var(--goldlt);font-weight:700;margin-bottom:10px;text-shadow:0 2px 10px rgba(0,0,0,.4);}
+  .hero .slogan-en{font-size:14px;color:rgba(255,255,255,0.75);letter-spacing:1px;margin-bottom:36px;text-shadow:0 2px 8px rgba(0,0,0,.4);}
+  .cta{display:inline-block;background:var(--gold);color:var(--deep);font-weight:800;font-size:16px;
+       padding:15px 36px;border-radius:14px;text-decoration:none;box-shadow:0 10px 24px rgba(0,0,0,0.35);
+       transition:transform .2s;}
+  .cta:hover{transform:translateY(-3px);}
+
+  section{max-width:1100px;margin:0 auto;padding:70px 24px;}
+  .section-title{text-align:center;font-size:clamp(26px,4vw,36px);font-weight:900;color:var(--deep);margin-bottom:10px;}
+  .section-sub{text-align:center;color:var(--mid);font-size:15px;margin-bottom:48px;font-weight:600;}
+
+  /* ---------- characters ---------- */
+  .chars{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;}
+  @media(max-width:820px){.chars{grid-template-columns:repeat(2,1fr);}}
+  .char-card{background:var(--white);border-radius:20px;padding:26px 18px;text-align:center;
+      box-shadow:0 8px 22px rgba(46,26,71,0.12);transition:transform .25s;}
+  .char-card:hover{transform:translateY(-6px);}
+  .char-avatar{width:120px;height:120px;border-radius:50%;object-fit:cover;border:5px solid var(--gold);
+      margin:0 auto 16px;box-shadow:0 6px 16px rgba(0,0,0,0.2);}
+  .char-name{font-size:19px;font-weight:800;color:var(--deep);margin-bottom:6px;}
+  .char-role{display:inline-block;background:var(--mid);color:var(--white);font-size:12px;font-weight:700;
+      padding:5px 16px;border-radius:20px;margin-bottom:12px;}
+  .char-quote{font-size:13.5px;color:var(--ink);opacity:0.85;min-height:60px;}
+
+  /* ---------- game cards (rendered inside the grade hub) ---------- */
+  #grades{background:linear-gradient(180deg,var(--cream),#efe4c4);}
+  .game-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;}
+  @media(max-width:820px){.game-grid{grid-template-columns:1fr;}}
+  .game-card{background:var(--white);border-radius:20px;overflow:hidden;box-shadow:0 10px 26px rgba(46,26,71,0.15);
+      display:flex;flex-direction:column;}
+  .game-card.featured{outline:3px solid var(--gold);outline-offset:-3px;}
+  .game-cover{height:150px;background:linear-gradient(135deg,var(--gold),var(--mid));display:flex;
+      align-items:center;justify-content:center;font-size:52px;}
+  .game-body{padding:22px;display:flex;flex-direction:column;flex:1;}
+  .game-badge{display:inline-block;background:var(--goldlt);color:var(--deep);font-size:11.5px;font-weight:800;
+      padding:4px 13px;border-radius:20px;margin-bottom:10px;align-self:flex-start;}
+  .game-title{font-size:18px;font-weight:800;color:var(--deep);margin-bottom:8px;min-height:26px;}
+  .game-desc{font-size:13.5px;color:var(--ink);opacity:0.85;margin-bottom:18px;flex:1;}
+  .game-download,.game-play{display:block;text-align:center;background:var(--gold);color:var(--deep);font-weight:800;
+      font-size:14px;padding:13px;border-radius:12px;text-decoration:none;transition:filter .2s;}
+  .game-download:hover,.game-play:hover{filter:brightness(1.08);}
+  .game-soon{display:block;text-align:center;background:#e3dcc8;color:#8a8060;font-weight:800;font-size:14px;
+      padding:13px;border-radius:12px;}
+
+  footer{background:var(--deep);color:var(--goldlt);text-align:center;padding:36px 24px;font-size:14px;}
+  footer .slogan{color:var(--white);font-weight:800;font-size:17px;margin-bottom:8px;}
+  .visit-counter{margin-top:14px;font-size:12.5px;color:rgba(240,198,116,.75);}
+
+  /* ---------- grade/subject/game hub ---------- */
+  .grades-breadcrumb{display:flex;justify-content:center;flex-wrap:wrap;gap:6px;margin-bottom:32px;font-size:13.5px;font-weight:700;}
+  .grades-breadcrumb .crumb{color:var(--mid);text-decoration:none;}
+  .grades-breadcrumb .crumb:hover{color:var(--gold);text-decoration:underline;}
+  .grades-breadcrumb .crumb.current{color:var(--deep);}
+  .grades-breadcrumb .crumb-sep{color:#c9bfa5;}
+
+  .grade-hub-heading{text-align:center;font-size:20px;font-weight:800;color:var(--deep);margin-bottom:24px;}
+
+  .grade-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:14px;}
+  .grade-tile{background:var(--white);border-radius:16px;padding:18px 10px 14px;text-align:center;
+      text-decoration:none;color:var(--deep);box-shadow:0 6px 16px rgba(46,26,71,0.1);
+      transition:transform .18s ease, box-shadow .18s ease;
+      display:flex;flex-direction:column;align-items:center;gap:8px;
+      border-top:4px solid transparent;}
+  .grade-tile:hover{transform:translateY(-4px);box-shadow:0 10px 22px rgba(46,26,71,0.18);}
+  .grade-tile-badge{width:44px;height:44px;border-radius:50%;color:var(--white);
+      display:flex;align-items:center;justify-content:center;font-weight:900;font-size:15px;flex-shrink:0;}
+  .grade-tile-name{font-size:12.5px;font-weight:700;}
+
+  /* stage colors: الروضة (coral) · ابتدائي (green) · متوسط (amber) · ثانوي (indigo) */
+  .grade-tile.stage-kg  {border-top-color:var(--kg-a);}
+  .grade-tile.stage-elem{border-top-color:var(--elem-a);}
+  .grade-tile.stage-mid {border-top-color:var(--mstage-a);}
+  .grade-tile.stage-high{border-top-color:var(--high-a);}
+  .stage-kg   .grade-tile-badge{background:linear-gradient(135deg,var(--kg-a),var(--kg-b));}
+  .stage-elem .grade-tile-badge{background:linear-gradient(135deg,var(--elem-a),var(--elem-b));}
+  .stage-mid  .grade-tile-badge{background:linear-gradient(135deg,var(--mstage-a),var(--mstage-b));}
+  .stage-high .grade-tile-badge{background:linear-gradient(135deg,var(--high-a),var(--high-b));}
+
+  .subject-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:18px;}
+  .subject-tile{background:var(--white);border-radius:18px;padding:28px 16px;text-align:center;
+      text-decoration:none;color:var(--deep);box-shadow:0 8px 20px rgba(46,26,71,0.12);
+      transition:transform .2s ease;display:block;}
+  .subject-tile:hover{transform:translateY(-5px);}
+  .subject-tile-icon{font-size:58px;display:block;margin-bottom:10px;}
+  .subject-tile-name{font-size:16px;font-weight:800;}
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <div class="brand">
+      <a href="https://drmahaha.github.io/" target="_blank" rel="noopener" style="text-decoration:none;">
+        <div class="brand-title">أكاديمية مها</div>
+        <div class="brand-sub">MAHA ACADEMY</div>
+      </a>
+    </div>
+    <ul>
+      <li><a href="#home">الرئيسية</a></li>
+      <li><a href="#characters">الشخصيات</a></li>
+      <li><a href="#grades">الصفوف الدراسية</a></li>
+    </ul>
+  </nav>
+</header>
+
+<section id="home" class="hero">
+  <h1>أكاديمية مها</h1>
+  <div class="slogan">اكتشف. فكّر. اصنع. استمر.</div>
+  <div class="slogan-en">EXPLORE · THINK · CREATE · KEEP GOING</div>
+</section>
+
+<section id="characters">
+  <div class="section-title">تعرّف على فريق الأكاديمية</div>
+  <div class="section-sub">أربعة أصدقاء يرافقون طفلك في كل مغامرة تعليمية</div>
+  <div class="chars">
+
+    <div class="char-card">
+      <img class="char-avatar" src="assets/Mahir_avatar.png" alt="ماهر المغامر">
+      <div class="char-name">ماهر المغامر</div>
+      <div class="char-role">اكتشف</div>
+      <div class="char-quote">فضولي وشجاع، يحب خوض المغامرات والتعلّم من كل رحلة.</div>
+    </div>
+
+    <div class="char-card">
+      <img class="char-avatar" src="assets/Maya_avatar.png" alt="مايا الذكية">
+      <div class="char-name">مايا الذكية</div>
+      <div class="char-role">فكّر</div>
+      <div class="char-quote">فضولية، تحب التعلّم والتفكير في كل شيء من حولها!</div>
+    </div>
+
+    <div class="char-card">
+      <img class="char-avatar" src="assets/Marya_avatar.png" alt="ماريا المبتكرة">
+      <div class="char-name">ماريا المبتكرة</div>
+      <div class="char-role">اصنع</div>
+      <div class="char-quote">تحب الإبداع، تبني وتصنع، وتحوّل الأفكار إلى شيء رائع!</div>
+    </div>
+
+    <div class="char-card">
+      <img class="char-avatar" src="assets/Malik_avatar.png" alt="مالك المحفّز">
+      <div class="char-name">مالك المحفّز</div>
+      <div class="char-role">استمر</div>
+      <div class="char-quote">يشجّع أصدقاءه دائمًا، ويساعدهم على الاستمرار وعدم الاستسلام.</div>
+    </div>
+
+  </div>
+</section>
+
+<section id="grades">
+  <div class="section-title">تصفح حسب الصف الدراسي</div>
+  <div class="section-sub">اختر الصف، ثم المادة، لعرض الألعاب المتاحة</div>
+  <div class="grades-breadcrumb" id="gradesBreadcrumb"></div>
+  <div id="gradesView"></div>
+</section>
+
+<footer>
+  <div class="slogan">اكتشف. فكّر. اصنع. استمر.</div>
+  <div>© أكاديمية مها — Maha Academy</div>
+  <div class="visit-counter" id="visitCounter"></div>
+</footer>
+
+<script>
+/* ===========================================================
+   Grade → Subject → Game hub
+   Everything the hub shows comes from the two lists below plus
+   GAMES_BY_SLOT. To add a real game later, add an entry to
+   GAMES_BY_SLOT keyed "<gradeId>-<subjectId>" — nothing else in
+   this script needs to change.
+   =========================================================== */
+
+/* Saudi grade names reset within each stage (ابتدائي / متوسط / ثانوي)
+   rather than counting straight through to 12 — e.g. 7th grade is
+   "الصف الأول المتوسط" (1st Intermediate), not "the 7th grade". */
+/* "stage" drives the tile color (see .stage-* rules in <style>) so the
+   three school stages are easy to tell apart at a glance. */
+const GRADES = [
+  { id:"kg",  nameAr:"الروضة / التمهيدي",          stage:"kg"   },
+  { id:"g1",  nameAr:"الصف الأول الابتدائي",       stage:"elem" },
+  { id:"g2",  nameAr:"الصف الثاني الابتدائي",      stage:"elem" },
+  { id:"g3",  nameAr:"الصف الثالث الابتدائي",      stage:"elem" },
+  { id:"g4",  nameAr:"الصف الرابع الابتدائي",      stage:"elem" },
+  { id:"g5",  nameAr:"الصف الخامس الابتدائي",      stage:"elem" },
+  { id:"g6",  nameAr:"الصف السادس الابتدائي",      stage:"elem" },
+  { id:"g7",  nameAr:"الصف الأول المتوسط",         stage:"mid"  },
+  { id:"g8",  nameAr:"الصف الثاني المتوسط",        stage:"mid"  },
+  { id:"g9",  nameAr:"الصف الثالث المتوسط",        stage:"mid"  },
+  { id:"g10", nameAr:"الصف الأول الثانوي",         stage:"high" },
+  { id:"g11", nameAr:"الصف الثاني الثانوي",        stage:"high" },
+  { id:"g12", nameAr:"الصف الثالث الثانوي",        stage:"high" }
+];
+
+/* icon = emoji fallback. iconImg (optional) = a real image, used instead
+   of the emoji when present. */
+const SUBJECTS = [
+  { id:"english", nameAr:"اللغة الإنجليزية", icon:"🔤", iconImg:"assets/english_icon.webp" },
+  { id:"math",    nameAr:"الرياضيات",         icon:"🔢", iconImg:"assets/math_icon.webp" },
+  { id:"science", nameAr:"العلوم",            icon:"🔬", iconImg:"assets/science_icon.webp" },
+  { id:"arabic",  nameAr:"اللغة العربية",      icon:"📖" }
+];
+
+function subjectIconHtml(subject, size){
+  return subject.iconImg
+    ? `<img src="${subject.iconImg}" alt="${subject.nameAr}" style="width:${size}px;height:${size}px;object-fit:contain;">`
+    : subject.icon;
+}
+
+/* The slots with a real game so far. Add more "gradeId-subjectId"
+   entries here as new games are built. kind:"download" shows a
+   download button (for PowerPoint games); anything else shows a
+   "Play now" button that opens the game in a new tab. */
+const GAMES_BY_SLOT = {
+  "kg-english": [
+    {
+      cover:"🧭",
+      titleAr:"مغامرة أصوات الحروف",
+      descAr:"انضم إلى ماهر والفريق في مغامرة شيّقة لاكتشاف أصوات الحروف الإنجليزية — وليس فقط أسماءها — من خلال الاستكشاف واللعب.",
+      link:"Letter_Sounds_Adventure.pptx",
+      kind:"download"
+    }
+  ],
+  "g5-english": [
+    {
+      cover:"🗺️",
+      badgeAr:"الوحدة الأولى",
+      titleAr:"مغامرة اللغة الإنجليزية",
+      descAr:"انطلق مع ماهر ومايا وماريا ومالك في خريطة مغامرة تفاعلية عبر 5 محطات: الأشهر، القياس، الأعداد، الماضي، وصيغة التفضيل.",
+      link:"English_5th_grade_unit_1/English_5th_grade_unit_1.html"
+    }
+  ]
+};
+
+function gradeBadgeText(gradeId){
+  if(gradeId === "kg") return "KG";
+  const n = Number(gradeId.replace("g",""));
+  if(n <= 6) return String(n);       // ابتدائي: 1-6
+  if(n <= 9) return String(n - 6);   // متوسط: 1-3
+  return String(n - 9);              // ثانوي: 1-3
+}
+
+function renderGradeHub(){
+  // location.hash looks like "#grades", "#grades/g5", or "#grades/g5/english"
+  const parts = location.hash.replace("#grades","").split("/").filter(Boolean);
+  const gradeId = parts[0] || null;
+  const subjectId = parts[1] || null;
+  const grade = GRADES.find(g => g.id === gradeId);
+  const subject = grade ? SUBJECTS.find(s => s.id === subjectId) : null;
+
+  // Breadcrumb
+  const crumbs = [`<a href="#grades" class="crumb">الصفوف الدراسية</a>`];
+  if(grade) crumbs.push(`<a href="#grades/${grade.id}" class="crumb${subject ? '' : ' current'}">${grade.nameAr}</a>`);
+  if(grade && subject) crumbs.push(`<span class="crumb current">${subject.nameAr}</span>`);
+  document.getElementById('gradesBreadcrumb').innerHTML = crumbs.join('<span class="crumb-sep">‹</span>');
+
+  const view = document.getElementById('gradesView');
+  if(!grade){
+    // Level 1: pick a grade
+    view.innerHTML = `<div class="grade-grid">` + GRADES.map(g => `
+      <a href="#grades/${g.id}" class="grade-tile stage-${g.stage}">
+        <span class="grade-tile-badge">${gradeBadgeText(g.id)}</span>
+        <span class="grade-tile-name">${g.nameAr}</span>
+      </a>`).join('') + `</div>`;
+  } else if(!subject){
+    // Level 2: pick a subject within that grade
+    view.innerHTML = `
+      <div class="grade-hub-heading">${grade.nameAr}</div>
+      <div class="subject-grid">` + SUBJECTS.map(s => `
+        <a href="#grades/${grade.id}/${s.id}" class="subject-tile">
+          <span class="subject-tile-icon">${subjectIconHtml(s, 58)}</span>
+          <span class="subject-tile-name">${s.nameAr}</span>
+        </a>`).join('') + `</div>`;
+  } else {
+    // Level 3: games available for that grade + subject
+    const games = GAMES_BY_SLOT[grade.id + "-" + subject.id] || [];
+    view.innerHTML = `
+      <div class="grade-hub-heading">${grade.nameAr} · ${subject.nameAr}</div>
+      <div class="game-grid">` + (games.length ? games.map(g => `
+        <div class="game-card featured">
+          <div class="game-cover">${g.cover}</div>
+          <div class="game-body">
+            ${g.badgeAr ? `<div class="game-badge">${g.badgeAr}</div>` : ''}
+            <div class="game-title">${g.titleAr}</div>
+            <div class="game-desc">${g.descAr}</div>
+            ${g.kind === 'download'
+              ? `<a class="game-download" href="${g.link}" download>⬇ تحميل اللعبة (PowerPoint)</a>`
+              : `<a class="game-play" href="${g.link}" target="_blank" rel="noopener">▶ ابدأ اللعبة الآن</a>`}
+          </div>
+        </div>`).join('') : `
+        <div class="game-card">
+          <div class="game-cover">${subjectIconHtml(subject, 64)}</div>
+          <div class="game-body">
+            <div class="game-title">قريبًا</div>
+            <div class="game-desc">نعمل على إضافة ألعاب لهذه المادة. تابعونا قريبًا!</div>
+            <span class="game-soon">قريبًا</span>
+          </div>
+        </div>`) + `</div>`;
+  }
+}
+
+window.addEventListener('hashchange', renderGradeHub);
+document.addEventListener('DOMContentLoaded', renderGradeHub);
+
+/* ===========================================================
+   Visit counter
+   A plain HTML file has no server of its own to keep count on, so
+   this calls a free, no-signup hit-counter API (abacus.jasoncameron.dev)
+   that increments one shared number every time ANYONE, on any
+   device, loads this page — that's a real cross-visitor count,
+   unlike a localStorage-based counter which only ever sees one
+   browser. It needs an internet connection to work; if the request
+   fails (offline, the free service is down, etc.) the counter is
+   just hidden rather than showing a wrong number.
+
+   NAMESPACE/KEY below only need to be unique so this site's count
+   doesn't mix with anyone else's using the same free service — they
+   are not an account of any kind, just an ID string.
+   =========================================================== */
+document.addEventListener('DOMContentLoaded', () => {
+  const namespace = 'maha-academy-mhm781';
+  const key = 'homepage-visits';
+  fetch(`https://abacus.jasoncameron.dev/hit/${namespace}/${key}`)
+    .then(res => res.json())
+    .then(data => {
+      const el = document.getElementById('visitCounter');
+      if(el) el.textContent = `عدد الزيارات: ${data.value}`;
+    })
+    .catch(() => { /* offline or the counter service is unreachable — say nothing rather than guess */ });
+});
+</script>
+
+</body>
+</html>
