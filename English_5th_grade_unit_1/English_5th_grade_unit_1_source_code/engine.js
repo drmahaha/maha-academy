@@ -152,56 +152,46 @@ function renderMiniStars(n){
   return s;
 }
 
-/* Percent-based positions matched by eye to the station cards painted into
-   the map illustration (English_5thgrade_unit1_map.png), so the clickable
-   hotspot sits right on top of each drawn station. zone = clickable area
-   (covers the card art); badge = where the dynamic status pill floats
-   (just below the card, in open ground). */
-const MAP_STATION_POS = {
-  months:  { zone:{x:18.23,y:43.95,w:16.28,h:9.77}, badge:{x:18.23,y:50.3} },
-  measure: { zone:{x:24.41,y:76.17,w:15.63,h:8.79}, badge:{x:24.41,y:82.0} },
-  numbers: { zone:{x:50.78,y:62.21,w:16.28,h:9.28}, badge:{x:50.78,y:68.4} },
-  past:    { zone:{x:77.28,y:52.93,w:15.95,h:9.28}, badge:{x:77.28,y:59.1} },
-  super:   { zone:{x:72.07,y:80.76,w:15.95,h:9.28}, badge:{x:72.07,y:86.9} }
-};
-
+/* Vertical winding path: one round station button per game, stacked top to
+   bottom and alternating left/right, connected by a dashed trail. Replaces
+   the old illustrated map + percent-positioned hotspots, which shrank to
+   unusably small tap targets on phones since it was one wide fixed-ratio
+   image. This layout scales naturally at any screen size. */
 function renderMap(){
-  const hotspots = document.getElementById('mapHotspots');
-  if(!hotspots) return;
-  hotspots.innerHTML = '';
+  const track = document.getElementById('pathTrack');
+  if(!track) return;
+  track.innerHTML = '';
   const curIdx = firstIncompleteIndex();
   ALL_GAMES.forEach((game, idx)=>{
-    const pos = MAP_STATION_POS[game.id];
-    if(!pos) return;
     const unlocked = !!progress.unlocked[game.id];
     const completed = !!progress.completed[game.id];
     const stars = progress.stars[game.id] || 0;
+    const isCurrent = idx === curIdx;
 
-    const zone = document.createElement('button');
-    zone.type = 'button';
-    zone.className = 'map-hotspot ' + (unlocked ? 'unlocked' : 'locked') + (idx===curIdx ? ' current' : '');
-    zone.style.left = pos.zone.x + '%';
-    zone.style.top = pos.zone.y + '%';
-    zone.style.width = pos.zone.w + '%';
-    zone.style.height = pos.zone.h + '%';
-    zone.setAttribute('aria-label', game.titleEn + ' - ' + game.titleAr);
-    zone.innerHTML = !unlocked ? '<div class="map-hotspot-dim"></div>' : '';
-    zone.onclick = () => {
+    const node = document.createElement('div');
+    node.className = 'path-node ' + (idx % 2 === 0 ? 'side-a' : 'side-b');
+
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'path-node-btn ' +
+      (unlocked ? 'unlocked' : 'locked') +
+      (isCurrent ? ' current' : '') +
+      (completed ? ' completed' : '');
+    btn.setAttribute('aria-label', game.titleEn + ' - ' + game.titleAr);
+    btn.innerHTML = `<span class="path-node-emoji">${unlocked ? game.emoji : '🔒'}</span>` +
+      (completed ? `<span class="path-node-stars">${renderMiniStars(stars)}</span>` : '');
+    btn.onclick = () => {
       if(unlocked) startGame(game.id);
       else showToast('Finish the previous adventure to unlock this! 🔒', 'أكمل المغامرة السابقة لفتح هذه المرحلة!');
     };
-    hotspots.appendChild(zone);
 
-    const badge = document.createElement('div');
-    badge.className = 'map-status-badge';
-    badge.style.left = pos.badge.x + '%';
-    badge.style.top = pos.badge.y + '%';
-    let pillHtml;
-    if(!unlocked) pillHtml = `<span class="pill">🔒</span>`;
-    else if(completed) pillHtml = `<span class="pill done">✓ ${renderMiniStars(stars)}</span>`;
-    else pillHtml = `<span class="pill">${renderMiniStars(stars)}</span>`;
-    badge.innerHTML = `${pillHtml}<span class="ar ar-text">${game.titleAr}</span>`;
-    hotspots.appendChild(badge);
+    const label = document.createElement('div');
+    label.className = 'path-node-label';
+    label.innerHTML = `${game.titleEn}<span class="ar-text">${game.titleAr}</span>`;
+
+    node.appendChild(btn);
+    node.appendChild(label);
+    track.appendChild(node);
   });
   updateTotalStarsBar();
   updateTopbarStars();

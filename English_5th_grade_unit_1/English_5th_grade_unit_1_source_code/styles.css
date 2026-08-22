@@ -190,72 +190,98 @@ img{max-width:100%;display:block;}
 
 .map-board{
   position:relative;
-  width:min(980px,100%);
+  width:min(560px,100%);
   margin-top:14px;
   background:linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.03));
   border:2px solid rgba(255,255,255,.18);
   border-radius:32px;
-  padding:14px;
-  overflow:hidden;
+  padding:30px 18px 22px;
 }
 
-/* ---- Clickable illustrated map ---- */
-.map-illustration{
-  position:relative;
-  width:100%;
-  aspect-ratio:1536/1024;
-  border-radius:22px;
-  overflow:hidden;
-  box-shadow:0 10px 30px rgba(20,10,45,.4);
-}
-.map-illustration-img{
-  position:absolute; inset:0;
-  width:100%; height:100%;
-  object-fit:cover;
-  display:block;
-  user-select:none; -webkit-user-drag:none;
-}
-.map-hotspots{ position:absolute; inset:0; }
-
-.map-hotspot{
-  position:absolute;
-  transform:translate(-50%,-50%);
-  border-radius:20px;
-  border:3px solid transparent;
-  cursor:pointer;
-  background:transparent;
-  padding:0;
-  transition:transform .18s ease, border-color .18s ease, box-shadow .18s ease;
-}
-.map-hotspot.unlocked:hover{transform:translate(-50%,-50%) scale(1.035); box-shadow:0 0 0 4px rgba(255,255,255,.28);}
-.map-hotspot.current{border-color:var(--gold-400); animation:pulseGlow 2.2s ease-in-out infinite;}
+/* ---- Vertical winding path (replaces the old illustrated map+hotspots;
+   a single wide illustration shrank to unusably small on phones, so the
+   path is a set of round, always-legible station buttons instead) ---- */
 @keyframes pulseGlow{
   0%,100%{box-shadow:0 0 0 0 rgba(244,197,66,.55);}
   50%{box-shadow:0 0 0 9px rgba(244,197,66,0);}
 }
-.map-hotspot.locked{cursor:not-allowed;}
-.map-hotspot.locked .map-hotspot-dim{
-  position:absolute; inset:0;
-  background:rgba(20,10,40,.5);
-  border-radius:17px;
+
+.path-track{
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:30px;
+  padding:6px 0;
+}
+.path-track:before{
+  content:"";
+  position:absolute;
+  top:8px; bottom:8px; left:50%;
+  border-left:6px dashed rgba(255,255,255,.35);
+  transform:translateX(-50%);
+  z-index:0;
 }
 
-.map-status-badge{
-  position:absolute;
-  transform:translate(-50%,-50%);
-  display:flex; flex-direction:column; align-items:center; gap:1px;
-  pointer-events:none;
-  z-index:2;
+.path-node{
+  position:relative;
+  z-index:1;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:8px;
+  transition:transform .2s ease;
 }
-.map-status-badge .pill{
-  background:rgba(20,10,45,.85); color:#fff; font-weight:800; font-size:clamp(9px,1.5vw,13px);
-  padding:3px 9px; border-radius:999px; white-space:nowrap;
+.path-node.side-a{transform:translateX(-32%);}
+.path-node.side-b{transform:translateX(32%);}
+@media (max-width:380px){
+  .path-node.side-a{transform:translateX(-20%);}
+  .path-node.side-b{transform:translateX(20%);}
+}
+
+.path-node-btn{
+  width:88px; height:88px;
+  border-radius:50%;
+  border:4px solid rgba(255,255,255,.5);
+  background:linear-gradient(180deg,#fff,#f1e9ff);
+  box-shadow:0 8px 0 rgba(20,10,45,.35), 0 10px 22px rgba(0,0,0,.3);
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer;
+  position:relative;
+  padding:0;
+  transition:transform .15s ease;
+}
+.path-node-emoji{font-size:38px; line-height:1;}
+.path-node-btn.unlocked:hover{transform:translateY(-3px) scale(1.04);}
+.path-node-btn.unlocked:active{transform:translateY(2px);}
+.path-node-btn.locked{
+  background:linear-gradient(180deg,#cfc7de,#b9aecd);
+  border-color:rgba(255,255,255,.25);
+  cursor:not-allowed;
+  box-shadow:0 6px 0 rgba(20,10,45,.25);
+}
+.path-node-btn.current{
+  border-color:var(--gold-400);
+  animation:pulseGlow 2.2s ease-in-out infinite;
+}
+.path-node-btn.completed{
+  border-color:var(--green-500);
+  background:linear-gradient(180deg,#e3fbee,#c9f5db);
+}
+.path-node-stars{
+  position:absolute; bottom:-11px; left:50%;
+  transform:translateX(-50%);
+  background:rgba(20,10,45,.9); color:#fff; font-weight:800; font-size:11px;
+  padding:2px 9px; border-radius:999px; white-space:nowrap;
   box-shadow:0 3px 8px rgba(0,0,0,.35); border:1px solid rgba(255,255,255,.25);
 }
-.map-status-badge .pill.done{background:rgba(15,140,90,.9);}
-.map-status-badge .ar{
-  font-size:clamp(8px,1.2vw,10.5px); color:#fff; opacity:.92; font-weight:700;
-  background:rgba(20,10,45,.7); padding:1px 7px; border-radius:999px; margin-top:1px;
+.path-node-label{
+  text-align:center; color:#fff; font-weight:800; font-size:13.5px;
+  max-width:150px;
+  text-shadow:0 2px 6px rgba(0,0,0,.35);
+}
+.path-node-label .ar-text{
+  display:block; font-size:.85em; opacity:.85; margin-top:2px; font-weight:700;
 }
 .map-guide{
   display:flex;align-items:center;gap:14px;justify-content:center;
