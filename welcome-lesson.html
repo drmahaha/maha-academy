@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Welcome! — Maha Academy</title>
+<link rel="stylesheet" href="../../shared/common.css">
+<style>
+  /* Page-specific styles for the Welcome! lesson only. */
+  .wl-hero {
+    text-align: center;
+    padding: 28px 0 8px;
+  }
+  .wl-hero h1 {
+    font-size: 2.4rem;
+    margin: 0;
+    color: var(--ma-purple-dark);
+  }
+  .wl-hero p {
+    color: var(--ma-ink-soft);
+    margin: 6px 0 0;
+  }
+
+  /* ---- Look and find scene ---- */
+  .wl-scene-wrap {
+    border-radius: var(--ma-radius-md);
+    overflow: hidden;
+    border: 1px solid var(--ma-border);
+    background: #F7F2FF;
+  }
+  .wl-scene-wrap svg { display: block; width: 100%; height: auto; }
+
+  .hotspot-target { transition: filter 0.3s, transform 0.3s; transform-box: fill-box; transform-origin: center; }
+  .hotspot-target.spot-active {
+    filter: drop-shadow(0 0 10px #F5B700) drop-shadow(0 0 3px #fff);
+    animation: wl-pulse 0.9s ease-in-out infinite;
+  }
+  @keyframes wl-pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.07); }
+  }
+
+  .wl-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 18px;
+  }
+
+  /* ---- Lyrics ---- */
+  .wl-lyrics-block { margin-bottom: 18px; }
+  .wl-lyrics-label {
+    font-weight: 800;
+    color: var(--ma-teal);
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+  .lyric-line {
+    margin: 0 0 4px;
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    transition: background 0.25s, transform 0.25s;
+  }
+  .lyric-line.active {
+    background: var(--ma-purple-light);
+    color: var(--ma-purple-dark);
+    font-weight: 700;
+    transform: translateX(4px);
+  }
+
+  /* ---- Chant ---- */
+  .wl-chant-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 10px 0;
+    padding: 8px 12px;
+    border-radius: 12px;
+    transition: background 0.25s;
+  }
+  .wl-chant-row.active { background: var(--ma-purple-light); }
+  .wl-chant-tag {
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: #fff;
+    padding: 3px 10px;
+    border-radius: var(--ma-radius-pill);
+    flex-shrink: 0;
+    width: 80px;
+    text-align: center;
+  }
+  .wl-chant-tag.leader { background: var(--ma-purple); }
+  .wl-chant-tag.kids { background: var(--ma-coral); }
+  .wl-chant-text { font-size: 1.15rem; font-weight: 600; }
+
+  .wl-avatars { display: flex; gap: 10px; margin: 16px 0; }
+  .wl-avatar {
+    width: 46px; height: 46px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem; box-shadow: var(--ma-shadow-soft);
+    transition: transform 0.25s;
+  }
+  .wl-avatar.bounce { animation: wl-bounce 0.5s ease-in-out infinite; }
+  @keyframes wl-bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+
+  .wl-toast {
+    position: fixed;
+    left: 50%; bottom: 26px;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--ma-purple-dark);
+    color: #fff;
+    padding: 12px 22px;
+    border-radius: var(--ma-radius-pill);
+    font-weight: 700;
+    box-shadow: var(--ma-shadow);
+    opacity: 0;
+    transition: opacity 0.3s, transform 0.3s;
+    pointer-events: none;
+    z-index: 50;
+  }
+  .wl-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  .wl-complete {
+    text-align: center;
+    padding: 20px;
+    border: 2px dashed var(--ma-gold);
+    border-radius: var(--ma-radius-md);
+    background: #FFF9E8;
+    margin-top: 24px;
+  }
+</style>
+</head>
+<body class="ma-app">
+
+  <header class="ma-header">
+    <div class="ma-brand"><span class="ma-brand-dot"></span> Maha Academy</div>
+    <div class="ma-stars" id="starsBox" aria-label="Stars earned"></div>
+  </header>
+
+  <main class="ma-container">
+    <div class="wl-hero">
+      <h1>Welcome!</h1>
+      <p>Unit 4 &middot; Lesson 1 &middot; Tap, listen, and play</p>
+    </div>
+
+    <!-- SECTION 1: Look and find -->
+    <section class="ma-card">
+      <h2 class="ma-section-title"><span class="ma-section-num">1</span> Look and find</h2>
+      <p class="ma-section-sub">Tap a word, then find it in the picture!</p>
+
+      <div class="wl-scene-wrap">
+        <svg viewBox="0 0 900 520" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Classroom scene">
+          <rect width="900" height="520" fill="#F7F2FF"/>
+
+          <!-- Window with mountain + rainbow -->
+          <rect x="540" y="24" width="330" height="210" rx="16" fill="#BEE7F5" stroke="#8FCBE0" stroke-width="4"/>
+          <clipPath id="windowClip"><rect x="540" y="24" width="330" height="210" rx="16"/></clipPath>
+          <g clip-path="url(#windowClip)">
+            <circle cx="845" cy="48" r="18" fill="#FFE49A"/>
+
+            <g class="hotspot-target" id="hs-rainbow">
+              <path d="M 528 236 A 92 92 0 0 1 712 236" fill="none" stroke="#E85D75" stroke-width="9"/>
+              <path d="M 546 236 A 74 74 0 0 1 694 236" fill="none" stroke="#F5B700" stroke-width="9"/>
+              <path d="M 564 236 A 56 56 0 0 1 676 236" fill="none" stroke="#2CA6A4" stroke-width="9"/>
+              <path d="M 582 236 A 38 38 0 0 1 658 236" fill="none" stroke="#6B3FA0" stroke-width="9"/>
+            </g>
+
+            <g class="hotspot-target" id="hs-mountain">
+              <polygon points="700,234 764,120 806,170 838,140 872,234" fill="#8F7BB0"/>
+              <polygon points="764,120 787,153 741,153" fill="#FFFFFF"/>
+              <polygon points="838,140 855,163 821,163" fill="#FFFFFF"/>
+            </g>
+          </g>
+
+          <!-- Bookshelf with comic book -->
+          <rect x="40" y="70" width="150" height="140" rx="10" fill="#B98A5A"/>
+          <rect x="52" y="82" width="126" height="50" rx="4" fill="#8A6238"/>
+          <rect x="58" y="88" width="14" height="38" fill="#6B3FA0"/>
+          <rect x="76" y="88" width="14" height="38" fill="#2CA6A4"/>
+          <rect x="94" y="88" width="14" height="38" fill="#E85D75"/>
+          <rect x="112" y="88" width="14" height="38" fill="#F5B700"/>
+
+          <g class="hotspot-target" id="hs-comic-book">
+            <rect x="55" y="150" width="120" height="46" rx="6" fill="#F5B700" stroke="#D69E00" stroke-width="3"/>
+            <path d="M 65 173 L 85 158 L 100 178 L 120 160 L 140 173" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="160" cy="165" r="7" fill="#E85D75"/>
+          </g>
+
+          <!-- Lion picture frame -->
+          <g class="hotspot-target" id="hs-lion">
+            <rect x="230" y="40" width="120" height="110" rx="8" fill="#fff" stroke="#B98A5A" stroke-width="8"/>
+            <circle cx="290" cy="100" r="30" fill="#F5B700"/>
+            <circle cx="290" cy="100" r="18" fill="#E8A33D"/>
+            <circle cx="281" cy="94" r="3.5" fill="#2B2438"/>
+            <circle cx="299" cy="94" r="3.5" fill="#2B2438"/>
+            <path d="M 283 108 Q 290 114 297 108" fill="none" stroke="#2B2438" stroke-width="2.5" stroke-linecap="round"/>
+          </g>
+
+          <!-- Clock (decorative, not a target) -->
+          <circle cx="430" cy="90" r="34" fill="#fff" stroke="#6B3FA0" stroke-width="5"/>
+          <line x1="430" y1="90" x2="430" y2="68" stroke="#2B2438" stroke-width="3" stroke-linecap="round"/>
+          <line x1="430" y1="90" x2="448" y2="90" stroke="#2B2438" stroke-width="3" stroke-linecap="round"/>
+
+          <!-- Desks row -->
+          <g fill="#B98A5A">
+            <rect x="70" y="360" width="110" height="14" rx="4"/>
+            <rect x="230" y="360" width="110" height="14" rx="4"/>
+            <rect x="470" y="360" width="110" height="14" rx="4"/>
+            <rect x="630" y="360" width="110" height="14" rx="4"/>
+          </g>
+
+          <!-- Seated classmates (decorative, original simple monster design) -->
+          <g>
+            <!-- teal monster -->
+            <circle cx="125" cy="330" r="34" fill="#2CA6A4"/>
+            <circle cx="113" cy="322" r="7" fill="#fff"/><circle cx="137" cy="322" r="7" fill="#fff"/>
+            <circle cx="113" cy="322" r="3" fill="#2B2438"/><circle cx="137" cy="322" r="3" fill="#2B2438"/>
+            <path d="M 112 338 Q 125 348 138 338" stroke="#1F3B3A" stroke-width="3" fill="none" stroke-linecap="round"/>
+
+            <!-- coral monster -->
+            <circle cx="285" cy="330" r="34" fill="#E85D75"/>
+            <circle cx="273" cy="322" r="7" fill="#fff"/><circle cx="297" cy="322" r="7" fill="#fff"/>
+            <circle cx="273" cy="322" r="3" fill="#2B2438"/><circle cx="297" cy="322" r="3" fill="#2B2438"/>
+            <circle cx="285" cy="300" r="7" fill="#E85D75"/>
+            <path d="M 272 338 Q 285 348 298 338" stroke="#5C1B27" stroke-width="3" fill="none" stroke-linecap="round"/>
+
+            <!-- gold monster -->
+            <circle cx="525" cy="330" r="34" fill="#F5B700"/>
+            <circle cx="513" cy="322" r="7" fill="#fff"/><circle cx="537" cy="322" r="7" fill="#fff"/>
+            <circle cx="513" cy="322" r="3" fill="#2B2438"/><circle cx="537" cy="322" r="3" fill="#2B2438"/>
+            <path d="M 512 340 Q 525 350 538 340" stroke="#7A5900" stroke-width="3" fill="none" stroke-linecap="round"/>
+          </g>
+
+          <!-- Tall child (taller, standing, more human silhouette) -->
+          <g class="hotspot-target" id="hs-tall-child">
+            <circle cx="685" cy="290" r="26" fill="#6B3FA0"/>
+            <circle cx="675" cy="283" r="6" fill="#fff"/><circle cx="695" cy="283" r="6" fill="#fff"/>
+            <circle cx="675" cy="283" r="2.6" fill="#2B2438"/><circle cx="695" cy="283" r="2.6" fill="#2B2438"/>
+            <path d="M 674 298 Q 685 306 696 298" stroke="#3A2359" stroke-width="3" fill="none" stroke-linecap="round"/>
+            <rect x="662" y="314" width="46" height="70" rx="14" fill="#6B3FA0"/>
+          </g>
+
+          <!-- Tired child (drooping eyes, "zzz") -->
+          <g class="hotspot-target" id="hs-tired-child">
+            <circle cx="800" cy="345" r="30" fill="#8F7BB0"/>
+            <path d="M 786 340 q 8 8 16 0" stroke="#2B2438" stroke-width="3" fill="none" stroke-linecap="round"/>
+            <path d="M 806 340 q 8 8 16 0" stroke="#2B2438" stroke-width="3" fill="none" stroke-linecap="round"/>
+            <ellipse cx="800" cy="360" rx="10" ry="5" fill="#3A2359"/>
+            <text x="825" y="315" font-size="16" fill="#6B3FA0" font-family="inherit">z z z</text>
+          </g>
+        </svg>
+      </div>
+
+      <div class="wl-pills" id="pillsBox">
+        <button class="ma-pill" data-target="tall-child">a tall child</button>
+        <button class="ma-pill" data-target="tired-child">a tired child</button>
+        <button class="ma-pill" data-target="comic-book">comic book</button>
+        <button class="ma-pill" data-target="lion">lion</button>
+        <button class="ma-pill" data-target="mountain">mountain</button>
+        <button class="ma-pill" data-target="rainbow">rainbow</button>
+      </div>
+    </section>
+
+    <!-- SECTION 2: Listen and read -->
+    <section class="ma-card">
+      <h2 class="ma-section-title"><span class="ma-section-num">2</span> Listen and read</h2>
+      <p class="ma-section-sub">Press play and read along with the song.</p>
+
+      <button class="ma-btn ma-btn-play" id="playChorusBtn">&#9658; Play the song</button>
+
+      <div style="margin-top:18px;">
+        <div class="wl-lyrics-block">
+          <div class="wl-lyrics-label">Chorus</div>
+          <p class="lyric-line">Hello everybody.</p>
+          <p class="lyric-line">Welcome back to school!</p>
+          <p class="lyric-line">You'll learn a whole lot more,</p>
+          <p class="lyric-line">and you'll make some new friends, too!</p>
+        </div>
+        <div class="wl-lyrics-block">
+          <div class="wl-lyrics-label">Verse 1</div>
+          <p class="lyric-line">The All Sorts are here again</p>
+          <p class="lyric-line">to help you through the year.</p>
+          <p class="lyric-line">We'll learn and create together.</p>
+          <p class="lyric-line">We'll have fun, so have no fear!</p>
+        </div>
+        <div class="wl-lyrics-block">
+          <div class="wl-lyrics-label">Verse 2</div>
+          <p class="lyric-line">You'll learn new songs and games,</p>
+          <p class="lyric-line">and read new stories, too.</p>
+          <p class="lyric-line">Just wait and see what the teachers</p>
+          <p class="lyric-line">have prepared for you!</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: Listen again and chant -->
+    <section class="ma-card">
+      <h2 class="ma-section-title"><span class="ma-section-num">3</span> Listen again and chant</h2>
+      <p class="ma-section-sub">Say "HELLO!" back every time!</p>
+
+      <div class="wl-avatars" id="chantAvatars">
+        <div class="wl-avatar" style="background:#2CA6A4;">&#128075;</div>
+        <div class="wl-avatar" style="background:#E85D75;">&#128075;</div>
+        <div class="wl-avatar" style="background:#F5B700;">&#128075;</div>
+        <div class="wl-avatar" style="background:#6B3FA0;">&#128075;</div>
+      </div>
+
+      <button class="ma-btn ma-btn-play" id="playChantBtn">&#9658; Start the chant</button>
+
+      <div style="margin-top:18px;" id="chantBox">
+        <div class="wl-chant-row" data-chant="0">
+          <span class="wl-chant-tag leader">Leader</span>
+          <span class="wl-chant-text">Hello, everybody!</span>
+        </div>
+        <div class="wl-chant-row" data-chant="1">
+          <span class="wl-chant-tag kids">You say</span>
+          <span class="wl-chant-text">HELLO!</span>
+        </div>
+        <div class="wl-chant-row" data-chant="2">
+          <span class="wl-chant-tag leader">Leader</span>
+          <span class="wl-chant-text">Welcome back to school!</span>
+        </div>
+        <div class="wl-chant-row" data-chant="3">
+          <span class="wl-chant-tag kids">You say</span>
+          <span class="wl-chant-text">HELLO!</span>
+        </div>
+        <div class="wl-chant-row" data-chant="4">
+          <span class="wl-chant-tag leader">Leader</span>
+          <span class="wl-chant-text">Are you ready to learn?</span>
+        </div>
+        <div class="wl-chant-row" data-chant="5">
+          <span class="wl-chant-tag kids">You say</span>
+          <span class="wl-chant-text">HELLO!</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="wl-complete ma-hidden" id="completeBox">
+      <div style="font-size:2rem;">&#127881;</div>
+      <h3 style="margin:6px 0; color: var(--ma-purple-dark);">Great job!</h3>
+      <p style="margin:0; color: var(--ma-ink-soft);">You finished the Welcome! lesson and earned all 3 stars.</p>
+    </div>
+
+    <p class="ma-footer-note">Maha Academy &middot; Explore. Think. Create. Keep Going.</p>
+  </main>
+
+  <div class="wl-toast" id="toast"></div>
+
+  <script src="../../shared/common.js"></script>
+  <script>
+  (function () {
+    "use strict";
+    var GAME_ID = "welcome-lesson";
+    var STAR_IDS = ["find", "read", "chant"];
+
+    var starsBox = document.getElementById("starsBox");
+    var toast = document.getElementById("toast");
+    var completeBox = document.getElementById("completeBox");
+
+    var progress = MahaAcademy.getProgress(GAME_ID, 3);
+    MahaAcademy.renderStars(starsBox, STAR_IDS, progress.earned);
+    checkAllComplete();
+
+    function showToast(msg) {
+      toast.textContent = msg;
+      toast.classList.add("show");
+      setTimeout(function () { toast.classList.remove("show"); }, 1800);
+    }
+
+    function awardStar(id, message) {
+      if (progress.earned.indexOf(id) !== -1) return; // already earned
+      progress.earned = MahaAcademy.awardStar(GAME_ID, id);
+      MahaAcademy.celebrateStar(starsBox, id);
+      showToast(message);
+      checkAllComplete();
+    }
+
+    function checkAllComplete() {
+      var allDone = STAR_IDS.every(function (id) { return progress.earned.indexOf(id) !== -1; });
+      completeBox.classList.toggle("ma-hidden", !allDone);
+    }
+
+    /* ---------------- Section 1: Look and find ---------------- */
+    var phrases = {
+      "tall-child": "a tall child",
+      "tired-child": "a tired child",
+      "comic-book": "comic book",
+      "lion": "lion",
+      "mountain": "mountain",
+      "rainbow": "rainbow",
+    };
+    var pills = Array.prototype.slice.call(document.querySelectorAll("#pillsBox .ma-pill"));
+    var foundCount = 0;
+    var alreadyFoundBefore = progress.earned.indexOf("find") !== -1;
+
+    pills.forEach(function (pill) {
+      var id = pill.dataset.target;
+      if (alreadyFoundBefore) pill.classList.add("found");
+      pill.addEventListener("click", function () {
+        var targetEl = document.getElementById("hs-" + id);
+        document.querySelectorAll(".hotspot-target").forEach(function (t) { t.classList.remove("spot-active"); });
+        if (targetEl) targetEl.classList.add("spot-active");
+        MahaAcademy.speak(phrases[id]);
+        setTimeout(function () { if (targetEl) targetEl.classList.remove("spot-active"); }, 1800);
+
+        if (!pill.classList.contains("found")) {
+          pill.classList.add("found");
+          foundCount++;
+          if (foundCount === pills.length) {
+            awardStar("find", "⭐ You found everything! Great looking!");
+          }
+        }
+      });
+    });
+    if (alreadyFoundBefore) foundCount = pills.length;
+
+    /* ---------------- Section 2: Listen and read ---------------- */
+    var playChorusBtn = document.getElementById("playChorusBtn");
+    var lyricLines = Array.prototype.slice.call(document.querySelectorAll(".lyric-line"));
+
+    playChorusBtn.addEventListener("click", function () {
+      playChorusBtn.disabled = true;
+      var texts = lyricLines.map(function (l) { return l.textContent; });
+      MahaAcademy.speakSequence(texts, {
+        onLineStart: function (idx) {
+          lyricLines.forEach(function (l) { l.classList.remove("active"); });
+          lyricLines[idx].classList.add("active");
+          lyricLines[idx].scrollIntoView({ behavior: "smooth", block: "center" });
+        },
+        onDone: function () {
+          lyricLines.forEach(function (l) { l.classList.remove("active"); });
+          playChorusBtn.disabled = false;
+          awardStar("read", "⭐ Nice reading along!");
+        },
+      });
+    });
+
+    /* ---------------- Section 3: Listen again and chant ---------------- */
+    var playChantBtn = document.getElementById("playChantBtn");
+    var chantRows = Array.prototype.slice.call(document.querySelectorAll(".wl-chant-row"));
+    var avatars = Array.prototype.slice.call(document.querySelectorAll("#chantAvatars .wl-avatar"));
+
+    playChantBtn.addEventListener("click", function () {
+      playChantBtn.disabled = true;
+      var texts = chantRows.map(function (r) { return r.querySelector(".wl-chant-text").textContent; });
+      MahaAcademy.speakSequence(texts, {
+        rate: 1,
+        onLineStart: function (idx) {
+          chantRows.forEach(function (r) { r.classList.remove("active"); });
+          chantRows[idx].classList.add("active");
+          var isKids = chantRows[idx].dataset.chant % 2 === 1;
+          avatars.forEach(function (a) { a.classList.toggle("bounce", isKids); });
+        },
+        onDone: function () {
+          chantRows.forEach(function (r) { r.classList.remove("active"); });
+          avatars.forEach(function (a) { a.classList.remove("bounce"); });
+          playChantBtn.disabled = false;
+          awardStar("chant", "⭐ HELLO! Chant complete!");
+        },
+      });
+    });
+  })();
+  </script>
+</body>
+</html>

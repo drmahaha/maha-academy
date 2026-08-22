@@ -5,9 +5,6 @@
 
 
 # Design docs / reference material — not part of the live site
-Letter_Sounds_Adventure_GAME_DESIGN.md
-Letter_Sounds_Adventure_Storyboard.md
-Maha_Academy_Character_Brand_Reference.docx
 Prompt*/
 
 # Unused/legacy files not linked from index.html
@@ -18,14 +15,8 @@ games/
 
 # Full-resolution source images — the smaller optimized copies actually
 # used by the site live in assets/*_avatar.png instead
-Mahir.png
-Malik.png
-Marya.png
-Maya.png
 unnamed.jpg
 e_5thg_u1_p4.jpg
-pngtree-3d-lab-bottle-png-illustration-png-image_11597905.png
-Academy poster.png
 
 
 # put everything you  don't want to publish on GitHub in this folder 
