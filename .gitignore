@@ -2,14 +2,7 @@
 .DS_Store
 **/.DS_Store
 
-# Leftover temp folder from setup — safe to delete entirely
-_to_delete/
 
-# Author's build/generation scripts — not needed to serve the site
-build.js
-build_level1.js
-gen_audio.py
-gen_scenes.py
 
 # Design docs / reference material — not part of the live site
 Letter_Sounds_Adventure_GAME_DESIGN.md
@@ -34,6 +27,6 @@ e_5thg_u1_p4.jpg
 pngtree-3d-lab-bottle-png-illustration-png-image_11597905.png
 Academy poster.png
 
-# Duplicate of index.html — keep whichever one you actually edit day to day.
-# Delete this line if you still want it tracked in git.
-Maha_Academy_Main_Page.html
+
+# put everything you  don't want to publish on GitHub in this folder 
+not_published/
