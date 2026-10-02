@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>أكاديمية مها — مختبر الرياضيات (الصف الثالث الابتدائي)</title>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Tajawal:wght@500;700;800&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
+<style id="mahaStyles">/*__STYLES__*/</style>
+</head>
+<body>
+<div id="app">
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="brand-mini" id="logoHomeBtn">
+        <img src="" id="logoImg" alt="أكاديمية مها">
+        <div class="topbar-title">مختبر الرياضيات — الصف الثالث الابتدائي<span class="en-badge">Math Lab · Grade 3</span></div>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <a class="icon-btn small academy-home-btn" href="../../../index.html" title="الصفحة الرئيسية لأكاديمية مها" style="text-decoration:none;display:inline-flex;align-items:center;gap:4px;">🏫 <span>أكاديمية مها</span></a>
+      <div class="xp-pill" id="topbarXP">⚡ 0 XP</div>
+      <div class="level-pill" id="topbarLevel">المستوى 1</div>
+      <div class="lang-toggle" aria-label="English term toggle">
+        <button id="enToggleOn" class="active" type="button">AR+EN</button>
+        <button id="enToggleOff" type="button">AR</button>
+      </div>
+      <button class="icon-btn small" id="homeBtn" type="button">🏠</button>
+      <button class="icon-btn small" id="labBtnTop" type="button">🧪</button>
+      <button class="icon-btn small" id="settingsBtn" type="button">⚙️</button>
+    </div>
+  </div>
+
+  <!-- WELCOME -->
+  <section class="screen" id="screen-welcome">
+    <div class="welcome-wrap">
+      <img class="welcome-logo" id="welcomeLogo" src="" alt="أكاديمية مها">
+      <h1 class="welcome-title">مختبر الرياضيات<span class="en-badge">Math Lab</span></h1>
+      <div class="welcome-grade">الصف الثالث الابتدائي <span class="en-badge">Grade 3</span></div>
+      <p class="welcome-tagline">فكّر. احسب. اكتشف.<span class="en-badge">Think. Calculate. Discover.</span></p>
+      <div class="welcome-cast">
+        <img src="" id="castMaya" alt="مايا الذكية">
+        <img src="" id="castMarya" alt="ماريا الصانعة">
+        <img src="" id="castMahir" alt="ماهر المغامر">
+        <img src="" id="castMalik" alt="مالك المحفّز">
+      </div>
+      <div class="intro-bubble" id="introBubble">
+        <p id="introLine">مرحبًا بك في مختبر الرياضيات! هنا لن تحفظ الرياضيات فقط... ستبنيها!</p>
+        <p class="en-badge" id="introLineEn">Welcome to the Math Lab! Here you won't just memorize math... you'll build it!</p>
+      </div>
+      <button class="btn-start" id="startBtn" type="button">ابدأ 🚀 <span class="en-badge">Start</span></button>
+    </div>
+  </section>
+
+  <!-- LAB HUB -->
+  <section class="screen" id="screen-hub">
+    <div class="hub-title">
+      <h1>مختبر الرياضيات<span class="en-badge">The Math Lab</span></h1>
+      <p class="hub-sub">اختر محطة لتبدأ! <span class="en-badge">Pick a station to begin!</span></p>
+    </div>
+    <div class="hub-grid" id="hubGrid"></div>
+    <div class="hub-guide">
+      <img src="" id="hubGuideImg" alt="مايا">
+      <p id="hubGuideText">كل محطة تحتوي على أجهزة تفاعلية مختلفة. جرّبها كلها!
+        <span class="en-badge">Each station has different interactive machines. Try them all!</span></p>
+    </div>
+  </section>
+
+  <!-- MODULE SCREEN -->
+  <section class="screen" id="screen-module">
+    <div class="module-header">
+      <button class="icon-btn small" id="moduleBackBtn" type="button">⬅ العودة <span class="en-badge">Back</span></button>
+      <div class="module-title">
+        <span class="emoji" id="moduleEmoji">🧪</span>
+        <div>
+          <h2 id="moduleTitleAr">المحطة</h2>
+          <div class="en-badge" id="moduleTitleEn"></div>
+        </div>
+      </div>
+      <div class="module-mastery" id="moduleMasteryPill">0%</div>
+    </div>
+    <div class="machine-grid" id="machineGrid"></div>
+  </section>
+
+  <!-- ACTIVITY SCREEN -->
+  <section class="screen" id="screen-activity">
+    <div class="activity-shell">
+      <div class="activity-header">
+        <button class="icon-btn small" id="activityBackBtn" type="button">⬅ <span class="en-badge">Back</span></button>
+        <div class="activity-title">
+          <h2 id="activityTitleAr">الجهاز</h2>
+          <div class="en-badge" id="activityTitleEn"></div>
+        </div>
+        <div class="activity-progress" id="activityDots"></div>
+      </div>
+      <div class="activity-card" id="activityCard"></div>
+    </div>
+  </section>
+
+  <!-- ACTIVITY RESULTS -->
+  <section class="screen" id="screen-activityEnd">
+    <div id="activityEndContent"></div>
+  </section>
+
+  <!-- PROGRESS CONSOLE -->
+  <section class="screen" id="screen-progress">
+    <div class="module-header">
+      <button class="icon-btn small" id="progressBackBtn" type="button">⬅ العودة <span class="en-badge">Back</span></button>
+      <div class="module-title"><span class="emoji">📊</span><div><h2>لوحة الإتقان</h2><div class="en-badge">Mastery Dashboard</div></div></div>
+      <div></div>
+    </div>
+    <div class="mastery-board" id="masteryBoard"></div>
+  </section>
+
+  <div class="footer-credit">أكاديمية مها &nbsp;•&nbsp; Maha Academy — Math Lab · Grade 3</div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<div class="modal-backdrop" id="settingsModal">
+  <div class="modal-box">
+    <h3>الإعدادات <span class="en-badge">Settings</span></h3>
+    <p>إعادة ضبط تقدمك في المختبر والبدء من جديد.
+      <span class="en-badge" style="display:block;">Reset your lab progress and start again from scratch.</span></p>
+    <div class="action-row">
+      <button class="btn btn-secondary" id="closeSettingsBtn" type="button">إلغاء <span class="en-badge">Cancel</span></button>
+      <button class="btn btn-primary" id="confirmResetBtn" type="button">إعادة الضبط <span class="en-badge">Reset Progress</span></button>
+    </div>
+  </div>
+</div>
+
+<script id="mahaAssets">/*__ASSETS__*/</script>
+<script id="mahaData">/*__DATA__*/</script>
+<script id="mahaEngine">/*__ENGINE__*/</script>
+<script id="mahaApp">
+/*__APP__*/
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('logoImg').src = LOGO_IMG;
+  document.getElementById('welcomeLogo').src = LOGO_IMG;
+  document.getElementById('castMahir').src = MAHIR_IMG;
+  document.getElementById('castMaya').src = MAYA_IMG;
+  document.getElementById('castMarya').src = MARYA_IMG;
+  document.getElementById('castMalik').src = MALIK_IMG;
+  document.getElementById('hubGuideImg').src = MAYA_IMG;
+});
+</script>
+</body>
+</html>

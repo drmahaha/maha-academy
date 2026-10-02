@@ -105,6 +105,23 @@
 
   footer{background:var(--deep);color:var(--goldlt);text-align:center;padding:36px 24px;font-size:14px;}
   footer .slogan{color:var(--white);font-weight:800;font-size:17px;margin-bottom:8px;}
+  footer .copyright{margin-top:6px;color:var(--white);font-weight:700;}
+
+  /* ---------- contact ---------- */
+  #contact{max-width:720px;}
+  section[id]{scroll-margin-top:80px;}
+  .contact-form{background:var(--white);border-radius:20px;padding:28px 24px;box-shadow:0 10px 26px rgba(46,26,71,0.12);
+      display:flex;flex-direction:column;gap:16px;}
+  .contact-form label{display:flex;flex-direction:column;gap:6px;font-weight:700;color:var(--deep);font-size:14px;}
+  .contact-form input,.contact-form select,.contact-form textarea{font-family:'Cairo',sans-serif;font-size:15px;
+      padding:11px 14px;border:2px solid #e3dcc8;border-radius:12px;background:#fffdf7;color:var(--ink);}
+  .contact-form input:focus,.contact-form select:focus,.contact-form textarea:focus{outline:none;border-color:var(--gold);}
+  .contact-form textarea{resize:vertical;}
+  .cf-hp{display:none;}
+  .cf-send{border:none;cursor:pointer;font-family:'Cairo',sans-serif;align-self:center;}
+  .cf-send:disabled{opacity:.6;cursor:wait;}
+  .cf-status{text-align:center;font-weight:700;min-height:24px;}
+  .cf-status.ok{color:#1F7A5C;} .cf-status.err{color:#B83A52;}
   .visit-counter{margin-top:14px;font-size:12.5px;color:rgba(240,198,116,.75);}
 
   /* ---------- grade/subject/game hub ---------- */
@@ -159,15 +176,16 @@
     <ul>
       <li><a href="#home">الرئيسية</a></li>
       <li><a href="#characters">الشخصيات</a></li>
-      <li><a href="#grades">الصفوف الدراسية</a></li>
+      <li><a href="#grades">الألعاب</a></li>
+      <li><a href="#contact">تواصل معنا</a></li>
     </ul>
   </nav>
 </header>
 
 <section id="home" class="hero">
   <h1>أكاديمية مها</h1>
-  <div class="slogan">اكتشف. فكّر. ابنِ. استمر.</div>
-  <div class="slogan-en">EXPLORE · THINK · BUILD · KEEP GOING</div>
+  <div class="slogan">اكتشف. فكّر. اصنع. استمر.</div>
+  <div class="slogan-en">EXPLORE · THINK · MAKE · KEEP GOING</div>
 </section>
 
 <section id="characters">
@@ -192,7 +210,7 @@
     <div class="char-card">
       <img class="char-avatar" src="assets/Marya_avatar.png" alt="ماريا المبتكرة">
       <div class="char-name">ماريا المبتكرة</div>
-      <div class="char-role">ابنِ</div>
+      <div class="char-role">اصنع</div>
       <div class="char-quote">تحب الإبداع، تبني وتصنع، وتحوّل الأفكار إلى شيء رائع!</div>
     </div>
 
@@ -207,15 +225,43 @@
 </section>
 
 <section id="grades">
-  <div class="section-title">تصفح حسب الصف الدراسي</div>
+  <div class="section-title">تصفح الألعاب حسب الصف الدراسي</div>
   <div class="section-sub">اختر الصف، ثم المادة، لعرض الألعاب المتاحة</div>
   <div class="grades-breadcrumb" id="gradesBreadcrumb"></div>
   <div id="gradesView"></div>
 </section>
 
+<section id="contact">
+  <div class="section-title">تواصل معنا</div>
+  <div class="section-sub">لديك اقتراح، أو سؤال، أو لاحظت خطأً في إحدى الألعاب؟ اكتب لنا وسنقرأ رسالتك.</div>
+  <form class="contact-form" id="contactForm" novalidate>
+    <label>الاسم
+      <input type="text" name="name" id="cfName" maxlength="80" placeholder="اسمك">
+    </label>
+    <label>البريد الإلكتروني (اختياري — إذا أردت أن نرد عليك)
+      <input type="email" name="email" id="cfEmail" maxlength="120" placeholder="example@email.com" dir="ltr">
+    </label>
+    <label>نوع الرسالة
+      <select name="topic" id="cfTopic">
+        <option>اقتراح</option>
+        <option>سؤال</option>
+        <option>مشكلة في لعبة</option>
+        <option>أخرى</option>
+      </select>
+    </label>
+    <label>رسالتك
+      <textarea name="message" id="cfMessage" rows="5" maxlength="2000" required placeholder="اكتب رسالتك هنا…"></textarea>
+    </label>
+    <input type="checkbox" name="botcheck" class="cf-hp" tabindex="-1" autocomplete="off">
+    <button type="submit" class="cta cf-send" id="cfSend">إرسال ✉️</button>
+    <div class="cf-status" id="cfStatus" role="status"></div>
+  </form>
+</section>
+
 <footer>
-  <div class="slogan">اكتشف. فكّر. ابنِ. استمر.</div>
+  <div class="slogan">اكتشف. فكّر. اصنع. استمر.</div>
   <div>© أكاديمية مها — Maha Academy</div>
+  <div class="copyright">جميع الحقوق محفوظة للدكتورة مها الميمني</div>
   <div class="visit-counter" id="visitCounter"></div>
 </footer>
 
@@ -278,6 +324,22 @@ const GAMES_BY_SLOT = {
       kind:"download"
     }
   ],
+  "g1-english": [
+    {
+      cover:"🗺️",
+      titleAr:"مغامرة اللغة الإنجليزية",
+      descAr:"انطلق مع ماهر ومايا وماريا ومالك في خريطة مغامرة تفاعلية عبر 5 محطات: أصدقائي، جسمي، عائلتي، كم عمرك؟، وما هذا؟ ما ذلك؟",
+      link:"grades/01-g1/english/Grade1_English_Adventure.html"
+    }
+  ],
+  "g2-english": [
+    {
+      cover:"🗺️",
+      titleAr:"مغامرة اللغة الإنجليزية",
+      descAr:"انطلق مع ماهر ومايا وماريا في خريطة مغامرة تفاعلية عبر 3 محطات: المشاعر، الأشياء التي نرتديها، والأشياء التي نقوم بها.",
+      link:"grades/02-g2/english/Grade2_English_Adventure.html"
+    }
+  ],
   "g5-english": [
     {
       cover:"🗺️",
@@ -287,12 +349,394 @@ const GAMES_BY_SLOT = {
       link:"grades/05-g5/english/English_5th_grade_unit_1/English_5th_grade_unit_1.html"
     }
   ],
+  "g7-english": [
+    {
+      cover:"🗺️",
+      titleAr:"مغامرة اللغة الإنجليزية",
+      descAr:"انطلق مع ماهر ومايا وماريا ومالك في خريطة مغامرة تفاعلية عبر 5 محطات: العائلة، البيت، الوظائف، الروتين اليومي، والقدرة (can/can't).",
+      link:"grades/07-g7/english/Grade7_English_Adventure.html"
+    }
+  ],
+  "g8-english": [
+    {
+      cover:"🗺️",
+      titleAr:"مغامرة اللغة الإنجليزية",
+      descAr:"انطلق مع ماهر ومايا وماريا ومالك في خريطة مغامرة تفاعلية عبر 5 محطات: الشكل والوصف، الهوايات، المقارنة، الصحة، والتجارب (Have you ever...?).",
+      link:"grades/08-g8/english/Grade8_English_Adventure.html"
+    }
+  ],
+  "g9-english": [
+    {
+      cover:"🗺️",
+      titleAr:"مغامرة اللغة الإنجليزية",
+      descAr:"انطلق مع ماهر ومايا وماريا ومالك في خريطة مغامرة تفاعلية عبر 5 محطات: الشخصية، منذ ولمدة (since/for)، ضمائر الملكية، قصص الحياة، والتسوق.",
+      link:"grades/09-g9/english/Grade9_English_Adventure.html"
+    }
+  ],
+  "g10-english": [
+    {
+      cover:"🗺️",
+      titleAr:"مغامرة اللغة الإنجليزية",
+      descAr:"انطلق مع ماهر ومايا وماريا ومالك في خريطة مغامرة تفاعلية عبر 5 محطات: ثقافة الشباب، تجارب مثيرة، السفر، will/going to، والتقنية.",
+      link:"grades/10-g10/english/Grade10_English_Adventure.html"
+    }
+  ],
+  "g11-english": [
+    {
+      cover:"🗺️",
+      titleAr:"مغامرة اللغة الإنجليزية",
+      descAr:"انطلق مع ماهر ومايا وماريا ومالك في خريطة مغامرة تفاعلية عبر 5 محطات: نافذة على العالم، الأبطال، العمل والمهن، ألغاز الأفعال الناقصة، وكوكب الأرض.",
+      link:"grades/11-g11/english/Grade11_English_Adventure.html"
+    }
+  ],
+  "g12-english": [
+    {
+      cover:"🗺️",
+      titleAr:"مغامرة اللغة الإنجليزية",
+      descAr:"انطلق مع ماهر ومايا وماريا ومالك في خريطة مغامرة تفاعلية عبر 5 محطات: في عطلة، المكان الذي تريده، الجريمة والعقاب، مغامرة، والمستقبل والبيئة.",
+      link:"grades/12-g12/english/Grade12_English_Adventure.html"
+    }
+  ],
   "g7-math": [
+    {
+      cover:"🔢",
+      titleAr:"مغامرة الرياضيات",
+      descAr:"انطلق مع ماهر ومايا وماريا ومالك في خريطة مغامرة تفاعلية عبر 5 محطات: الأعداد الصحيحة، القوى والأسس، العبارات الجبرية، المعادلات، والمحيط والمساحة.",
+      link:"grades/07-g7/math/Grade7_Math_Adventure.html"
+    },
     {
       cover:"🧪",
       titleAr:"مختبر الرياضيات",
       descAr:"ادخل مختبر الرياضيات وشغّل 15 آلة تفاعلية حقيقية: مولّد القوى، غرفة موازين المعادلات، مفاعل الأزواج الصفرية، استوديو الرسم البياني، سوق النسبة المئوية، وأكثر — مع نظام نقاط وإتقان ومستويات.",
       link:"grades/07-g7/math/Grade7_MathLab.html"
+    }
+  ],
+  "kg-math": [
+    {
+      cover:"🧪",
+      titleAr:"مختبر الرياضيات",
+      descAr:"العدّ حتى 10، وإطار العشرة، والأشكال والألوان، والمقارنة، والأنماط — مع ماهر ومايا وماريا ومالك.",
+      link:"grades/00-kg/math/KG_MathLab.html"
+    }
+  ],
+  "g1-math": [
+    {
+      cover:"🧪",
+      titleAr:"مختبر الرياضيات",
+      descAr:"المقارنة والتصنيف، والأعداد حتى 20، والعشرات والآحاد، والأنماط، والجمع بالقفز والمجموعات.",
+      link:"grades/01-g1/math/Grade1_MathLab.html"
+    }
+  ],
+  "g2-math": [
+    {
+      cover:"🧪",
+      titleAr:"مختبر الرياضيات",
+      descAr:"القيمة المنزلية حتى 100، ولوحة المئة، وتكوين العشرة، وتمثيل البيانات، والجمع والطرح العمودي.",
+      link:"grades/02-g2/math/Grade2_MathLab.html"
+    }
+  ],
+  "g3-math": [
+    {
+      cover:"🧪",
+      titleAr:"مختبر الرياضيات",
+      descAr:"القيمة المنزلية والتقريب، والجمع والطرح، والمجموعات المتساوية والمصفوفات، وجدول الضرب.",
+      link:"grades/03-g3/math/Grade3_MathLab.html"
+    }
+  ],
+  "g4-math": [
+    {
+      cover:"🧪",
+      titleAr:"مختبر الرياضيات",
+      descAr:"الأعداد حتى مئات الألوف، والتقدير، والتمثيل بالأعمدة، وجداول الدوال، والضرب ونموذج المساحة.",
+      link:"grades/04-g4/math/Grade4_MathLab.html"
+    }
+  ],
+  "g5-math": [
+    {
+      cover:"🧪",
+      titleAr:"مختبر الرياضيات",
+      descAr:"الكسور العشرية، وخاصية التوزيع، والقسمة والباقي، والعبارات والمعادلات، والأعداد الكسرية.",
+      link:"grades/05-g5/math/Grade5_MathLab.html"
+    }
+  ],
+  "g6-math": [
+    {
+      cover:"🧪",
+      titleAr:"مختبر الرياضيات",
+      descAr:"شجرة العوامل والقوى، والمتوسط والوسيط، والكسور العشرية، وتبسيط الكسور، وتحويل الوحدات.",
+      link:"grades/06-g6/math/Grade6_MathLab.html"
+    }
+  ],
+  "g8-math": [
+    {
+      cover:"🧪",
+      titleAr:"مختبر الرياضيات",
+      descAr:"الأعداد النسبية والصيغة العلمية، والجذور وفيثاغورس، والتناسب والنسبة المئوية، والتحويلات الهندسية.",
+      link:"grades/08-g8/math/Grade8_MathLab.html"
+    }
+  ],
+  "g9-math": [
+    {
+      cover:"🧪",
+      titleAr:"مختبر الرياضيات",
+      descAr:"المعادلات والقيمة المطلقة، والعلاقات والدوال، والميل وy = mx + b، والمتباينات، وأنظمة المعادلات.",
+      link:"grades/09-g9/math/Grade9_MathLab.html"
+    }
+  ],
+  "g10-math": [
+    {
+      cover:"🧪",
+      titleAr:"مختبر الرياضيات",
+      descAr:"التبرير والبرهان وجداول الصواب، والمستقيمات المتوازية والزوايا، والمثلثات المتطابقة وعلاقاتها.",
+      link:"grades/10-g10/math/Grade10_MathLab.html"
+    }
+  ],
+  "g11-math": [
+    {
+      cover:"🧪",
+      titleAr:"مختبر الرياضيات",
+      descAr:"الدوال والمتباينات والبرمجة الخطية، والمصفوفات، والأعداد المركبة وكثيرات الحدود، والدوال الجذرية.",
+      link:"grades/11-g11/math/Grade11_MathLab.html"
+    }
+  ],
+  "g12-math": [
+    {
+      cover:"🧪",
+      titleAr:"مختبر الرياضيات",
+      descAr:"تحليل الدوال وتحويلاتها، والأسية واللوغاريتمية، والمتطابقات المثلثية، والقطوع المخروطية.",
+      link:"grades/12-g12/math/Grade12_MathLab.html"
+    }
+  ],
+  "kg-arabic": [
+    {
+      cover:"📚",
+      titleAr:"مكتبة الحكايات",
+      descAr:"كتب وحكايات ودروس: كتاب حروفي، كتاب أصواتي، كتاب كلماتي، كتاب حكاياتي — مع ماهر ومايا وماريا ومالك.",
+      link:"grades/00-kg/arabic/KG_StoryLibrary.html"
+    }
+  ],
+  "kg-science": [
+    {
+      cover:"🚌",
+      titleAr:"حافلة العلوم",
+      descAr:"تتحول الحافلة إلى صاروخ أو سيارة مستكشف أو غوّاصة حسب الدرس: حواسي الخمس، الحيوانات من حولي، مخلوقات البحر، الشمس والقمر.",
+      link:"grades/00-kg/science/KG_ScienceBus.html"
+    }
+  ],
+  "g1-arabic": [
+    {
+      cover:"📚",
+      titleAr:"مكتبة الحكايات",
+      descAr:"كتب وحكايات ودروس: أسرتي، مدرستي، مدينتي، أقرأ وأفهم — مع ماهر ومايا وماريا ومالك.",
+      link:"grades/01-g1/arabic/Grade1_StoryLibrary.html"
+    }
+  ],
+  "g1-science": [
+    {
+      cover:"🚌",
+      titleAr:"حافلة العلوم",
+      descAr:"تتحول الحافلة إلى صاروخ أو سيارة مستكشف أو غوّاصة حسب الدرس: النباتات، الحيوانات، اليابسة والماء، السماء.",
+      link:"grades/01-g1/science/Grade1_ScienceBus.html"
+    }
+  ],
+  "g2-arabic": [
+    {
+      cover:"📚",
+      titleAr:"مكتبة الحكايات",
+      descAr:"كتب وحكايات ودروس: أقربائي، أصدقائي وجيراني، وطني السعودية، آداب وسلوك — مع ماهر ومايا وماريا ومالك.",
+      link:"grades/02-g2/arabic/Grade2_StoryLibrary.html"
+    }
+  ],
+  "g2-science": [
+    {
+      cover:"🚌",
+      titleAr:"حافلة العلوم",
+      descAr:"تتحول الحافلة إلى صاروخ أو سيارة مستكشف أو غوّاصة حسب الدرس: النباتات، الحيوانات، البيئات، اليابسة والماء.",
+      link:"grades/02-g2/science/Grade2_ScienceBus.html"
+    }
+  ],
+  "g3-arabic": [
+    {
+      cover:"📚",
+      titleAr:"مكتبة الحكايات",
+      descAr:"كتب وحكايات ودروس: التعامل مع الآخرين، ربوع من بلادي، أخلاق المسلم، وسائل الاتصالات — مع ماهر ومايا وماريا ومالك.",
+      link:"grades/03-g3/arabic/Grade3_StoryLibrary.html"
+    }
+  ],
+  "g3-science": [
+    {
+      cover:"🚌",
+      titleAr:"حافلة العلوم",
+      descAr:"تتحول الحافلة إلى صاروخ أو سيارة مستكشف أو غوّاصة حسب الدرس: المخلوقات الحية، الأنظمة البيئية المائية، تغيّرات سطح الأرض، موارد الأرض.",
+      link:"grades/03-g3/science/Grade3_ScienceBus.html"
+    }
+  ],
+  "g4-arabic": [
+    {
+      cover:"📚",
+      titleAr:"مكتبة الحكايات",
+      descAr:"كتب وحكايات ودروس: الكلمة والجملة، الفعل والفاعل والمفعول، الرسم الإملائي، أقرأ وأفهم — مع ماهر ومايا وماريا ومالك.",
+      link:"grades/04-g4/arabic/Grade4_StoryLibrary.html"
+    }
+  ],
+  "g4-science": [
+    {
+      cover:"🚌",
+      titleAr:"حافلة العلوم",
+      descAr:"تتحول الحافلة إلى صاروخ أو سيارة مستكشف أو غوّاصة حسب الدرس: ممالك المخلوقات الحية، عالم الحيوان: فقاريات ولافقاريات، أجهزة جسم الحيوان، الأنظمة البيئية.",
+      link:"grades/04-g4/science/Grade4_ScienceBus.html"
+    }
+  ],
+  "g5-arabic": [
+    {
+      cover:"📚",
+      titleAr:"مكتبة الحكايات",
+      descAr:"كتب وحكايات ودروس: حكاية الدب والصديقين، علامات رفع الفاعل، الأفعال الخمسة، الإملاء والمعجم — مع ماهر ومايا وماريا ومالك.",
+      link:"grades/05-g5/arabic/Grade5_StoryLibrary.html"
+    }
+  ],
+  "g5-science": [
+    {
+      cover:"🚌",
+      titleAr:"حافلة العلوم",
+      descAr:"تتحول الحافلة إلى صاروخ أو سيارة مستكشف أو غوّاصة حسب الدرس: الخلايا والتصنيف، حياة النبات، العلاقات في النظام البيئي، الدورات في الطبيعة.",
+      link:"grades/05-g5/science/Grade5_ScienceBus.html"
+    }
+  ],
+  "g6-arabic": [
+    {
+      cover:"📚",
+      titleAr:"مكتبة الحكايات",
+      descAr:"كتب وحكايات ودروس: قدوات ومُثُل عليا، الوعي القرائي، الصحة والغذاء، الأساليب والمعاني — مع ماهر ومايا وماريا ومالك.",
+      link:"grades/06-g6/arabic/Grade6_StoryLibrary.html"
+    }
+  ],
+  "g6-science": [
+    {
+      cover:"🚌",
+      titleAr:"حافلة العلوم",
+      descAr:"تتحول الحافلة إلى صاروخ أو سيارة مستكشف أو غوّاصة حسب الدرس: الخلايا، الوراثة والصفات، العمليات الحيوية، الأنظمة البيئية والموارد.",
+      link:"grades/06-g6/science/Grade6_ScienceBus.html"
+    }
+  ],
+  "g7-arabic": [
+    {
+      cover:"📚",
+      titleAr:"مكتبة الحكايات",
+      descAr:"كتب وحكايات ودروس: القيم الإسلامية، المبتدأ والخبر والنواسخ، الأعلام، الرسم الإملائي — مع ماهر ومايا وماريا ومالك.",
+      link:"grades/07-g7/arabic/Grade7_StoryLibrary.html"
+    }
+  ],
+  "g7-science": [
+    {
+      cover:"🚌",
+      titleAr:"حافلة العلوم",
+      descAr:"تتحول الحافلة إلى صاروخ أو سيارة مستكشف أو غوّاصة حسب الدرس: طبيعة العلم، الحركة والقوى، المادة وتغيراتها، الصخور وطبقات الأرض.",
+      link:"grades/07-g7/science/Grade7_ScienceBus.html"
+    }
+  ],
+  "g8-arabic": [
+    {
+      cover:"📚",
+      titleAr:"مكتبة الحكايات",
+      descAr:"كتب وحكايات ودروس: تقنيات، قيم ومبادئ، أعلام سابقون، الرسم الإملائي — مع ماهر ومايا وماريا ومالك.",
+      link:"grades/08-g8/arabic/Grade8_StoryLibrary.html"
+    }
+  ],
+  "g8-science": [
+    {
+      cover:"🚌",
+      titleAr:"حافلة العلوم",
+      descAr:"تتحول الحافلة إلى صاروخ أو سيارة مستكشف أو غوّاصة حسب الدرس: المخاليط والمحاليل، حالات المادة، الطاقة وتحولاتها، أجهزة الجسم.",
+      link:"grades/08-g8/science/Grade8_ScienceBus.html"
+    }
+  ],
+  "g9-arabic": [
+    {
+      cover:"📚",
+      titleAr:"مكتبة الحكايات",
+      descAr:"كتب وحكايات ودروس: المشتقات، الحال والتمييز، أسلوب الشرط، الممنوع من الصرف والترقيم — مع ماهر ومايا وماريا ومالك.",
+      link:"grades/09-g9/arabic/Grade9_StoryLibrary.html"
+    }
+  ],
+  "g9-science": [
+    {
+      cover:"🚌",
+      titleAr:"حافلة العلوم",
+      descAr:"تتحول الحافلة إلى صاروخ أو سيارة مستكشف أو غوّاصة حسب الدرس: الزلازل والبراكين، الصفائح وقاع المحيط، أسس الحياة، الذرة والجدول الدوري.",
+      link:"grades/09-g9/science/Grade9_ScienceBus.html"
+    }
+  ],
+  "g10-arabic": [
+    {
+      cover:"📚",
+      titleAr:"مكتبة الحكايات",
+      descAr:"كتب وحكايات ودروس: الجملة الاسمية، النواسخ، الفعل المضارع والفاعل، أعراف الكتابة — مع ماهر ومايا وماريا ومالك.",
+      link:"grades/10-g10/arabic/Grade10_StoryLibrary.html"
+    }
+  ],
+  "g10-science": [
+    {
+      cover:"🚌",
+      titleAr:"حافلة العلوم",
+      descAr:"تتحول الحافلة إلى صاروخ أو سيارة مستكشف أو غوّاصة حسب الدرس: الكيمياء والمادة، تركيب الذرة، التفاعلات والمول، تنوّع الحياة.",
+      link:"grades/10-g10/science/Grade10_ScienceBus.html"
+    }
+  ],
+  "g11-arabic": [
+    {
+      cover:"📚",
+      titleAr:"مكتبة الحكايات",
+      descAr:"كتب وحكايات ودروس: المفاعيل، الحال والتمييز، التشبيه، الهمزات — مع ماهر ومايا وماريا ومالك.",
+      link:"grades/11-g11/arabic/Grade11_StoryLibrary.html"
+    }
+  ],
+  "g11-science": [
+    {
+      cover:"🚌",
+      titleAr:"حافلة العلوم",
+      descAr:"تتحول الحافلة إلى صاروخ أو سيارة مستكشف أو غوّاصة حسب الدرس: الشغل والطاقة، الجدول الدوري والروابط، الوراثة، الموجات والصوت.",
+      link:"grades/11-g11/science/Grade11_ScienceBus.html"
+    }
+  ],
+  "g12-arabic": [
+    {
+      cover:"📚",
+      titleAr:"مكتبة الحكايات",
+      descAr:"كتب وحكايات ودروس: الأساليب، الاستثناء، البديع، فنون النثر — مع ماهر ومايا وماريا ومالك.",
+      link:"grades/12-g12/arabic/Grade12_StoryLibrary.html"
+    }
+  ],
+  "g12-science": [
+    {
+      cover:"🚌",
+      titleAr:"حافلة العلوم",
+      descAr:"تتحول الحافلة إلى صاروخ أو سيارة مستكشف أو غوّاصة حسب الدرس: المعادن والصخور، الغلاف الجوي والطقس، المحيطات، النظام الشمسي والنجوم.",
+      link:"grades/12-g12/science/Grade12_ScienceBus.html"
+    }
+  ],
+  "g3-english": [
+    {
+      cover:"🗺️",
+      titleAr:"مغامرة اللغة الإنجليزية",
+      descAr:"We Can 3: التعارف، حيوانات البحر، الرياضات، الأعمال المنزلية، الأمس واليوم، المهن.",
+      link:"grades/03-g3/english/Grade3_English_Adventure.html"
+    }
+  ],
+  "g4-english": [
+    {
+      cover:"🗺️",
+      titleAr:"مغامرة اللغة الإنجليزية",
+      descAr:"Top Goal 1: المناسبات العائلية، الأعمال المنزلية، القصص، متعة بعد المدرسة.",
+      link:"grades/04-g4/english/Grade4_English_Adventure.html"
+    }
+  ],
+  "g6-english": [
+    {
+      cover:"🗺️",
+      titleAr:"مغامرة اللغة الإنجليزية",
+      descAr:"Top Goal 3: الاهتمامات الشخصية، تصاميم المنازل، المسارات المهنية، الطعام الشهي.",
+      link:"grades/06-g6/english/Grade6_English_Adventure.html"
     }
   ]
 };
@@ -314,7 +758,7 @@ function renderGradeHub(){
   const subject = grade ? SUBJECTS.find(s => s.id === subjectId) : null;
 
   // Breadcrumb
-  const crumbs = [`<a href="#grades" class="crumb">الصفوف الدراسية</a>`];
+  const crumbs = [`<a href="#grades" class="crumb">الألعاب</a>`];
   if(grade) crumbs.push(`<a href="#grades/${grade.id}" class="crumb${subject ? '' : ' current'}">${grade.nameAr}</a>`);
   if(grade && subject) crumbs.push(`<span class="crumb current">${subject.nameAr}</span>`);
   document.getElementById('gradesBreadcrumb').innerHTML = crumbs.join('<span class="crumb-sep">‹</span>');
@@ -395,5 +839,43 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 
+<script>
+/* ===========================================================
+   Contact form — delivered to the academy inbox through
+   Web3Forms, so the email address never appears on the page.
+   Paste the access key from web3forms.com below.
+   =========================================================== */
+const WEB3FORMS_KEY = "";
+(function(){
+  const form = document.getElementById("contactForm");
+  const status = document.getElementById("cfStatus");
+  const btn = document.getElementById("cfSend");
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const msg = document.getElementById("cfMessage").value.trim();
+    status.className = "cf-status";
+    if(!msg){ status.textContent = "من فضلك اكتب رسالتك أولًا."; status.classList.add("err"); return; }
+    if(!WEB3FORMS_KEY){ status.textContent = "نموذج التواصل قيد التفعيل — حاول لاحقًا."; status.classList.add("err"); return; }
+    btn.disabled = true; status.textContent = "جارٍ الإرسال…";
+    const data = {
+      access_key: WEB3FORMS_KEY,
+      subject: "رسالة جديدة من موقع أكاديمية مها: " + document.getElementById("cfTopic").value,
+      from_name: "أكاديمية مها",
+      name: document.getElementById("cfName").value.trim() || "بدون اسم",
+      email: document.getElementById("cfEmail").value.trim() || undefined,
+      topic: document.getElementById("cfTopic").value,
+      message: msg,
+      botcheck: form.querySelector(".cf-hp").checked
+    };
+    try{
+      const res = await fetch("https://api.web3forms.com/submit", { method:"POST", headers:{ "Content-Type":"application/json", "Accept":"application/json" }, body: JSON.stringify(data) });
+      const out = await res.json();
+      if(out.success){ form.reset(); status.textContent = "شكرًا لك! وصلت رسالتك ✅"; status.classList.add("ok"); }
+      else throw new Error(out.message);
+    }catch(err){ status.textContent = "تعذّر الإرسال، حاول مرة أخرى بعد قليل."; status.classList.add("err"); }
+    btn.disabled = false;
+  });
+})();
+</script>
 </body>
 </html>
