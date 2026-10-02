@@ -22,7 +22,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.getElementById('startBtn').addEventListener('click', goMap);
   document.getElementById('logoHomeBtn').addEventListener('click', goHome);
-  document.getElementById('homeBtn').addEventListener('click', goHome);
   document.getElementById('mapBtnTop').addEventListener('click', goMap);
   document.getElementById('settingsBtn').addEventListener('click', openSettings);
   document.getElementById('closeSettingsBtn').addEventListener('click', closeSettings);

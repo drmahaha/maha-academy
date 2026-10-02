@@ -20,7 +20,6 @@ function goHub(){ document.body.dataset.veh = ""; showScreen("hub"); renderHub()
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("startBtn").addEventListener("click", goHub);
   document.getElementById("logoHomeBtn").addEventListener("click", goWelcome);
-  document.getElementById("homeBtn").addEventListener("click", goWelcome);
   document.getElementById("labBtnTop").addEventListener("click", goHub);
   document.getElementById("settingsBtn").addEventListener("click", openSettings);
   document.getElementById("closeSettingsBtn").addEventListener("click", closeSettings);
