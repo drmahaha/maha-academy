@@ -18,6 +18,7 @@ html = html.replace("/*__ASSETS__*/", assets)
 html = html.replace("/*__DATA__*/", data)
 html = html.replace("/*__ENGINE__*/", engine)
 html = html.replace("/*__APP__*/", app)
+html = html.replace("/*__BACKNAV__*/", read("backnav.js"))
 html = html.replace("/*__SFX__*/", read("sfx.js"))
 
 with open("maha-academy.html", "w", encoding="utf-8") as f:
