@@ -76,19 +76,14 @@ const ALL_GAMES = [
               { id: "mercury", value: 1, emoji: "🪨", labelAr: "عطارد" },
               { id: "venus", value: 2, emoji: "🟡", labelAr: "الزهرة" },
               { id: "earth", value: 3, emoji: "🌍", labelAr: "الأرض" },
-              { id: "mars", value: 4, emoji: "🔴", labelAr: "المريخ" }
-            ],
-            hintAr: "عطارد هو الأقرب إلى الشمس، والأرض هي الكوكب الثالث.",
-            hintEn: "Mercury is closest to the Sun; Earth is the third planet." },
-          { min: 1, max: 8,
-            items: [
+              { id: "mars", value: 4, emoji: "🔴", labelAr: "المريخ" },
               { id: "jupiter", value: 5, emoji: "🟠", labelAr: "المشتري" },
               { id: "saturn", value: 6, emoji: "🪐", labelAr: "زحل" },
               { id: "uranus", value: 7, emoji: "🔵", labelAr: "أورانوس" },
               { id: "neptune", value: 8, emoji: "🌀", labelAr: "نبتون" }
             ],
-            hintAr: "بعد المريخ يأتي المشتري (5)، ونبتون هو الأبعد عن الشمس (8).",
-            hintEn: "After Mars comes Jupiter (5); Neptune is the farthest (8)." }
+            hintAr: "عطارد هو الأقرب إلى الشمس (1)، والأرض هي الثالثة، ونبتون هو الأبعد (8).",
+            hintEn: "Mercury is closest (1), Earth is third, Neptune is farthest (8)." }
         ]
       },
       {
@@ -480,7 +475,7 @@ const ALL_GAMES = [
         instructionsAr: "ضع كل حدث على سنته الهجرية في خط الزمن.",
         instructionsEn: "Put each event on its Hijri year.",
         rounds: [
-          { min: 1, max: 11,
+          { min: 1, max: 5,
             items: [
               { id: "hijra", value: 1, emoji: "🐪", labelAr: "الهجرة" },
               { id: "badr", value: 2, emoji: "⚔️", labelAr: "غزوة بدر" },
@@ -489,7 +484,7 @@ const ALL_GAMES = [
             ],
             hintAr: "الهجرة في السنة 1، وبدر بعدها مباشرة، ثم أحد. والخندق في السنة 5.",
             hintEn: "Hijrah 1, then Badr, then Uhud. Khandaq is in year 5." },
-          { min: 1, max: 11,
+          { min: 6, max: 11,
             items: [
               { id: "hudaybiyyah", value: 6, emoji: "📜", labelAr: "صلح الحديبية" },
               { id: "fath", value: 8, emoji: "🕋", labelAr: "فتح مكة" },
