@@ -566,7 +566,7 @@ function renderNumberline(game, activity, round, container){
     chip.className = 'nl-chip';
     chip.dataset.id = it.id;
     chip.dataset.value = it.value;
-    chip.innerHTML = `${it.emoji ? it.emoji+'<br>' : ''}${it.labelAr || it.value}`;
+    chip.innerHTML = `${it.img ? `<img class="nl-img" src="${it.img}" alt="">` : (it.emoji ? it.emoji+'<br>' : '')}${it.labelAr || it.value}${it.labelEn ? `<span class="nl-en">${it.labelEn}</span>` : ''}`;
     chip.onclick = () => {
       if(chip.disabled) return;
       if(selectedChip) selectedChip.classList.remove('selected');
