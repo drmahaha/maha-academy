@@ -920,14 +920,14 @@ html:has(body.theme-library), body.theme-library{
       </div>
     </div>
     <div class="topbar-right">
+      <a class="icon-btn small academy-home-btn" href="../../../index.html" title="الصفحة الرئيسية لأكاديمية مها" style="text-decoration:none;display:inline-flex;align-items:center;gap:4px;">🏫 <span>أكاديمية مها</span></a>
       <div class="xp-pill" id="topbarXP">⚡ 0 XP</div>
       <div class="level-pill" id="topbarLevel">المستوى 1</div>
       <div class="lang-toggle" aria-label="English term toggle">
         <button id="enToggleOn" class="active" type="button">AR+EN</button>
         <button id="enToggleOff" type="button">AR</button>
       </div>
-      <a class="icon-btn small" id="homeBtn" href="../../../index.html#grades" title="كل الألعاب — All games" style="text-decoration:none;display:inline-flex;align-items:center;gap:4px;">🏠</a>
-      <button class="icon-btn small" id="labBtnTop" type="button">📚</button>
+      <button class="icon-btn small" id="homeBtn" type="button">🏠</button>
       <button class="icon-btn small" id="settingsBtn" type="button">⚙️</button>
     </div>
   </div>
@@ -4153,7 +4153,7 @@ function goHub(){ document.body.dataset.veh = ""; showScreen("hub"); renderHub()
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("startBtn").addEventListener("click", goHub);
   document.getElementById("logoHomeBtn").addEventListener("click", goWelcome);
-  document.getElementById("labBtnTop").addEventListener("click", goHub);
+  document.getElementById("homeBtn").addEventListener("click", goHub);
   document.getElementById("settingsBtn").addEventListener("click", openSettings);
   document.getElementById("closeSettingsBtn").addEventListener("click", closeSettings);
   document.getElementById("confirmResetBtn").addEventListener("click", doResetProgress);

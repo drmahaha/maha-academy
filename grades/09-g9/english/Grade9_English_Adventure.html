@@ -827,12 +827,12 @@ img{max-width:100%;display:block;}
       </div>
     </div>
     <div class="topbar-right">
+      <a class="icon-btn small academy-home-btn" href="../../../index.html" title="الصفحة الرئيسية لأكاديمية مها" style="text-decoration:none;display:inline-flex;align-items:center;gap:4px;">🏫 <span>أكاديمية مها</span></a>
       <div class="lang-toggle" aria-label="Arabic support toggle">
         <button id="arToggleOn" class="active" type="button">EN+AR</button>
         <button id="arToggleOff" type="button">EN</button>
       </div>
-      <a class="icon-btn small" id="homeBtn" href="../../../index.html#grades" title="كل الألعاب — All games" style="text-decoration:none;display:inline-flex;align-items:center;gap:4px;">🏠 <span class="ar-text">الرئيسية</span></a>
-      <button class="icon-btn small" id="mapBtnTop" type="button">🗺️ <span class="ar-text">الخريطة</span></button>
+      <button class="icon-btn small" id="homeBtn" type="button">🏠 <span class="ar-text">الرئيسية</span></button>
       <button class="icon-btn small" id="settingsBtn" type="button">⚙️</button>
       <div class="star-counter" id="topbarStars">⭐ 0</div>
     </div>
@@ -2490,7 +2490,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.getElementById('startBtn').addEventListener('click', goMap);
   document.getElementById('logoHomeBtn').addEventListener('click', goHome);
-  document.getElementById('mapBtnTop').addEventListener('click', goMap);
+  document.getElementById('homeBtn').addEventListener('click', goMap);
   document.getElementById('settingsBtn').addEventListener('click', openSettings);
   document.getElementById('closeSettingsBtn').addEventListener('click', closeSettings);
   document.getElementById('confirmResetBtn').addEventListener('click', doResetProgress);

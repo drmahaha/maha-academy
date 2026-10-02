@@ -20,7 +20,7 @@ function goHub(){ showScreen("hub"); renderHub(); }
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("startBtn").addEventListener("click", goHub);
   document.getElementById("logoHomeBtn").addEventListener("click", goWelcome);
-  document.getElementById("labBtnTop").addEventListener("click", goHub);
+  document.getElementById("homeBtn").addEventListener("click", goHub);
   document.getElementById("settingsBtn").addEventListener("click", openSettings);
   document.getElementById("closeSettingsBtn").addEventListener("click", closeSettings);
   document.getElementById("confirmResetBtn").addEventListener("click", doResetProgress);
