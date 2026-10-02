@@ -301,8 +301,10 @@ const SUBJECTS = [
   { id:"english", nameAr:"اللغة الإنجليزية", icon:"🔤", iconImg:"assets/english_icon.webp" },
   { id:"math",    nameAr:"الرياضيات",         icon:"🔢", iconImg:"assets/math_icon.webp" },
   { id:"science", nameAr:"العلوم",            icon:"🔬", iconImg:"assets/science_icon.webp" },
-  { id:"arabic",  nameAr:"اللغة العربية",      icon:"📖" }
+  { id:"arabic",  nameAr:"اللغة العربية",      icon:"📖" },
+  { id:"social",  nameAr:"الدراسات الاجتماعية", icon:"🌍", grades:["g4","g5","g6","g7","g8","g9"] }
 ];
+/* grades (optional) = only show this subject for those grades */
 
 function subjectIconHtml(subject, size){
   return subject.iconImg
@@ -408,6 +410,14 @@ const GAMES_BY_SLOT = {
       titleAr:"مختبر الرياضيات",
       descAr:"ادخل مختبر الرياضيات وشغّل 15 آلة تفاعلية حقيقية: مولّد القوى، غرفة موازين المعادلات، مفاعل الأزواج الصفرية، استوديو الرسم البياني، سوق النسبة المئوية، وأكثر — مع نظام نقاط وإتقان ومستويات.",
       link:"grades/07-g7/math/Grade7_MathLab.html"
+    }
+  ],
+  "g7-social": [
+    {
+      cover:"🌍",
+      titleAr:"مغامرة الدراسات الاجتماعية",
+      descAr:"رحلة مع ماهر ومايا ومالك وماريا عبر 4 محطات من كتاب الفصل الأول: الكون والأرض، الحضارات، التخطيط، والعصر النبوي — مفردات ودروس قصيرة وأسئلة وخط زمن هجري تفاعلي.",
+      link:"grades/07-g7/social/Grade7_Social_Adventure.html"
     }
   ],
   "kg-math": [
@@ -754,7 +764,7 @@ function renderGradeHub(){
   const gradeId = parts[0] || null;
   const subjectId = parts[1] || null;
   const grade = GRADES.find(g => g.id === gradeId);
-  const subject = grade ? SUBJECTS.find(s => s.id === subjectId) : null;
+  const subject = grade ? SUBJECTS.find(s => s.id === subjectId && (!s.grades || s.grades.includes(grade.id))) : null;
 
   // Breadcrumb
   const crumbs = [`<a href="#grades" class="crumb">الألعاب</a>`];
@@ -774,7 +784,7 @@ function renderGradeHub(){
     // Level 2: pick a subject within that grade
     view.innerHTML = `
       <div class="grade-hub-heading">${grade.nameAr}</div>
-      <div class="subject-grid">` + SUBJECTS.map(s => `
+      <div class="subject-grid">` + SUBJECTS.filter(s => !s.grades || s.grades.includes(grade.id)).map(s => `
         <a href="#grades/${grade.id}/${s.id}" class="subject-tile">
           <span class="subject-tile-icon">${subjectIconHtml(s, 58)}</span>
           <span class="subject-tile-name">${s.nameAr}</span>

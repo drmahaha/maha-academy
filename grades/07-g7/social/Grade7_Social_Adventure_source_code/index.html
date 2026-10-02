@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>أكاديمية مها — مغامرة الدراسات الاجتماعية (الصف الأول المتوسط)</title>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Tajawal:wght@500;700;800&display=swap" rel="stylesheet">
+<style id="mahaStyles">/*__STYLES__*/</style>
+</head>
+<body>
+<div id="app">
+
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="brand-mini" id="logoHomeBtn">
+        <img src="" id="logoImg" alt="أكاديمية مها">
+        <div class="topbar-title">أكاديمية مها<span class="en-badge">Maha Academy</span></div>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <a class="icon-btn small academy-home-btn" href="../../../index.html" title="الصفحة الرئيسية لأكاديمية مها" style="text-decoration:none;display:inline-flex;align-items:center;gap:4px;">🏫 <span>أكاديمية مها</span></a>
+      <div class="lang-toggle" aria-label="English term toggle">
+        <button id="enToggleOn" class="active" type="button">AR+EN</button>
+        <button id="enToggleOff" type="button">AR</button>
+      </div>
+      <button class="icon-btn small" id="homeBtn" type="button">🏠 <span class="en-badge">Home</span></button>
+      <button class="icon-btn small" id="settingsBtn" type="button">⚙️</button>
+      <div class="star-counter" id="topbarStars">⭐ 0</div>
+    </div>
+  </div>
+
+  <!-- SPLASH -->
+  <section class="screen" id="screen-splash">
+    <div class="splash-wrap">
+      <img class="splash-logo" id="splashLogo" src="" alt="أكاديمية مها">
+      <div class="splash-cast">
+        <img src="" id="castMahir" alt="ماهر المغامر">
+        <img src="" id="castMaya" alt="مايا الذكية">
+        <img src="" id="castMarya" alt="ماريا الصانعة">
+        <img src="" id="castMalik" alt="مالك المحفّز">
+      </div>
+      <p class="splash-tagline">اكتشف. فكّر. ابنِ. استمر.<span class="en-badge">Explore. Think. Build. Keep Going.</span></p>
+      <button class="btn-start" id="startBtn" type="button">ابدأ المغامرة 🚀 <span class="en-badge">Start Adventure</span></button>
+    </div>
+  </section>
+
+  <!-- MAP -->
+  <section class="screen" id="screen-map">
+    <div class="map-title">
+      <h1>خريطة المغامرة<span class="en-badge">Adventure Map</span></h1>
+    </div>
+    <div class="map-board" id="mapBoard">
+      <div class="path-track" id="pathTrack"></div>
+    </div>
+    <div class="total-stars-bar">
+      <span>تقدمي <span class="en-badge">My Progress</span></span>
+      <div class="total-stars-track"><div class="total-stars-fill" id="totalStarsFill" style="width:0%"></div></div>
+      <span id="totalStarsLabel">0 / 15 ⭐</span>
+    </div>
+    <div class="map-guide">
+      <img src="" id="mapGuideImg" alt="ماهر">
+      <p>اضغط على مكان في الخريطة لتبدأ مغامرتك! أكمل مرحلة لتفتح التي تليها.
+        <span class="en-badge">Tap a place on the map to start your adventure! Finish one to unlock the next.</span></p>
+    </div>
+  </section>
+
+  <!-- GAME -->
+  <section class="screen" id="screen-game">
+    <div class="game-shell">
+      <div class="game-header">
+        <div class="game-header-title">
+          <span class="emoji" id="gameHeaderEmoji">🔢</span>
+          <div>
+            <h2 id="gameHeaderTitleAr">لعبة</h2>
+            <div class="en-badge" id="gameHeaderTitleEn"></div>
+          </div>
+        </div>
+        <div class="activity-progress" id="activityDots"></div>
+        <button class="icon-btn small" id="gameExitBtn" type="button">🗺️ الخريطة <span class="en-badge">Map</span></button>
+      </div>
+      <div class="activity-card" id="activityCard"></div>
+    </div>
+  </section>
+
+  <!-- GAME END -->
+  <section class="screen" id="screen-gameEnd">
+    <div id="gameEndContent"></div>
+  </section>
+
+  <!-- FINAL -->
+  <section class="screen" id="screen-final">
+    <div class="final-title">
+      <h1>بطل أكاديمية مها!<span class="en-badge">Maha Academy Champion!</span></h1>
+    </div>
+    <div class="final-cast">
+      <img src="" id="finalMahir" alt="ماهر">
+      <img src="" id="finalMaya" alt="مايا">
+      <img src="" id="finalMarya" alt="ماريا">
+      <img src="" id="finalMalik" alt="مالك">
+    </div>
+    <div class="final-big-stars" id="finalStars"></div>
+    <p style="color:#fff;text-align:center;font-weight:700;max-width:520px;">
+      استكشفت مع ماهر، وفكرت مع مايا، وصنعت مع ماريا، واستمرت مع مالك!
+      <span class="en-badge" style="display:block;margin-top:6px;">You explored with Mahir, thought with Maya, built with Marya, and kept going with Malik!</span>
+    </p>
+    <div class="action-row">
+      <button class="btn btn-primary" id="finalToMapBtn" type="button">🗺️ العودة للخريطة <span class="en-badge">Back to Map</span></button>
+    </div>
+  </section>
+
+  <div class="footer-credit">أكاديمية مها &nbsp;•&nbsp; Maha Academy</div>
+</div>
+
+<div id="confettiLayer"></div>
+
+<div class="toast" id="toast"></div>
+
+<div class="modal-backdrop" id="settingsModal">
+  <div class="modal-box">
+    <h3>الإعدادات <span class="en-badge">Settings</span></h3>
+    <p>إعادة ضبط تقدمك والبدء من جديد.
+      <span class="en-badge" style="display:block;">Reset your progress and start the adventure again from the beginning.</span></p>
+    <div class="action-row">
+      <button class="btn btn-secondary" id="closeSettingsBtn" type="button">إلغاء <span class="en-badge">Cancel</span></button>
+      <button class="btn btn-primary" id="confirmResetBtn" type="button">إعادة الضبط <span class="en-badge">Reset Progress</span></button>
+    </div>
+  </div>
+</div>
+
+<script id="mahaAssets">/*__ASSETS__*/</script>
+<script id="mahaData">/*__DATA__*/</script>
+<script id="mahaEngine">/*__ENGINE__*/</script>
+<script id="mahaApp">
+/*__APP__*/
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('logoImg').src = LOGO_IMG;
+  document.getElementById('splashLogo').src = LOGO_IMG;
+  document.getElementById('castMahir').src = MAHIR_IMG;
+  document.getElementById('castMaya').src = MAYA_IMG;
+  document.getElementById('castMarya').src = MARYA_IMG;
+  document.getElementById('castMalik').src = MALIK_IMG;
+  document.getElementById('mapGuideImg').src = MAHIR_IMG;
+  document.getElementById('finalMahir').src = MAHIR_IMG;
+  document.getElementById('finalMaya').src = MAYA_IMG;
+  document.getElementById('finalMarya').src = MARYA_IMG;
+  document.getElementById('finalMalik').src = MALIK_IMG;
+});
+</script>
+<script id="mahaSfx">/*__SFX__*/</script>
+<script id="mahaBackNav">/*__BACKNAV__*/</script>
+</body>
+</html>
