@@ -1859,6 +1859,30 @@ function updateActivityHeader(){
   }).join("");
 }
 
+/* No-repeat rounds: content signature ignores shuffled order (sorted leaf values). */
+function roundSignature(key, r){
+  const out = [];
+  (function walk(v){
+    if(v === null || v === undefined) return;
+    if(Array.isArray(v)) v.forEach(walk);
+    else if(typeof v === "object") Object.keys(v).forEach(k => { if(!/^(hint|guide|sol)/.test(k)) walk(v[k]); });
+    else if(typeof v !== "function") out.push(String(v));
+  })(r);
+  return key + "|" + out.sort().join("\u0001");
+}
+function freshRound(){
+  if(!session.seen) session.seen = new Set();
+  for(let i = 0; i < 40; i++){
+    const r = GEN[session.currentMachKey](session.tier);
+    const sig = roundSignature(session.currentMachKey, r);
+    if(!session.seen.has(sig)){ session.seen.add(sig); return r; }
+    if(session.machKey === "mixed" && ARENA_POOL.length > 1){
+      session.currentMachKey = pick(ARENA_POOL);
+      session.currentType = machineType(session.currentMachKey);
+    }
+  }
+  return session.roundIdx === 0 ? GEN[session.currentMachKey](session.tier) : null;
+}
 function renderActivityRound(){
   session.hadMistake = false;
   session.hintsUsed = 0;
@@ -1869,7 +1893,8 @@ function renderActivityRound(){
     session.currentMachKey = k;
   }
   session.currentType = machineType(session.currentMachKey);
-  session.round = GEN[session.currentMachKey](session.tier);
+  session.round = freshRound();
+  if(session.round === null){ session.totalRounds = Math.max(1, session.roundIdx); finishMachineSession(); return; }
   updateActivityHeader();
   const card = document.getElementById("activityCard");
   card.innerHTML = `<div id="machineBody"></div>`;
