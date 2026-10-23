@@ -179,7 +179,7 @@
     var tt = teacherText(); $(".q-foot", m).hidden = !tt; $(".q-teacher", m).textContent = tt;
     var fb = $(".q-feedback", m); fb.textContent = ""; fb.className = "q-feedback";
     var cont = $(".q-continue", m); cont.hidden = true;
-    var box = $(".q-options", m); box.innerHTML = ""; box.className = "q-options" + (q.type === "tf" ? " tf" : "");
+    var box = $(".q-options", m); box.innerHTML = ""; box.className = "q-options" + (q.type === "tf" ? " tf" : (q.options.length === 3 ? " n3" : ""));
     var locked = false;
 
     var choices;

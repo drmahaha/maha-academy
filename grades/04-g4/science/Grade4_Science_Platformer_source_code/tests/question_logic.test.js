@@ -90,17 +90,17 @@ test("لكل درس بنك مستقل، ولا يتكرر معرّف سؤال ب
     b.forEach(q => { assert(!ids.has(q.id), "معرّف مكرر " + q.id); ids.add(q.id); assert(q.id.startsWith(l.id + "-"), q.id + " ليس من " + l.id); });
   });
 });
-test("سلامة صيغة الأسئلة (4 خيارات، إجابة واحدة صالحة، مصدر معروف)", () => {
+test("سلامة صيغة الأسئلة (3 أو 4 خيارات، إجابة واحدة صالحة، مصدر معروف)", () => {
   Object.values(QUESTION_BANKS).flat().forEach(q => {
     assert(q.text && q.text.trim().length > 3, q.id + " نص فارغ");
     assert(SOURCES[q.src], q.id + " مصدر غير معروف");
     assert(["منهجي", "واجباتي", "كتبي", "ملف مرفق"].includes(SOURCES[q.src].site), q.id + " موقع غير مسموح");
     assert(q.page === null || Number.isInteger(q.page), q.id + " رقم صفحة غير صالح");
     if (q.type === "mcq") {
-      assert.strictEqual(q.options.length, 4, q.id + " ليس 4 خيارات");
+      assert([3, 4].includes(q.options.length), q.id + " عدد الخيارات ليس 3 أو 4 (كما في النموذج الأصلي)");
       assert(q.options.every(o => o && o.trim()), q.id + " خيار فارغ");
-      assert.strictEqual(new Set(q.options).size, 4, q.id + " خيارات مكررة");
-      assert(Number.isInteger(q.answer) && q.answer >= 0 && q.answer < 4, q.id + " إجابة غير صالحة");
+      assert.strictEqual(new Set(q.options).size, q.options.length, q.id + " خيارات مكررة");
+      assert(Number.isInteger(q.answer) && q.answer >= 0 && q.answer < q.options.length, q.id + " إجابة غير صالحة");
     } else {
       assert.strictEqual(q.type, "tf", q.id + " نوع غير معروف");
       assert(typeof q.answer === "boolean", q.id + " إجابة صح/خطأ غير صالحة");

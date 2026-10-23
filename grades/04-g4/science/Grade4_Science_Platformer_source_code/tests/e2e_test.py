@@ -25,10 +25,10 @@ async def current_q(pg):
 async def click_answer(pg, correct):
     q = await current_q(pg)
     if q["type"] == "tf":
-        label = "صح ✓" if (q["answer"] == correct) else "خطأ ✗"
-        await pg.click(f".q-opt:has-text('{label}')")
+        cls = "tf-true" if (q["answer"] == correct) else "tf-false"
+        await pg.click(f".q-opt.{cls}")
     else:
-        target = q["options"][q["answer"]] if correct else q["options"][(q["answer"] + 1) % 4]
+        target = q["options"][q["answer"]] if correct else q["options"][(q["answer"] + 1) % len(q["options"])]
         btns = pg.locator(".q-opt")
         n = await btns.count()
         for i in range(n):
@@ -118,7 +118,7 @@ async def main():
         # الحالة 4: عودة السؤال الخاطئ بعد 3–5 أسئلة + الحالة 2 (عدم تكرار الصحيح) + الحالة 8
         between, back, lesson_ok, repeat_correct = 0, False, True, False
         for _ in range(8):
-            await pg.evaluate("Game._test.giveCoins(5)")
+            await pg.evaluate("Game.player.invuln = 999; Game._test.giveCoins(5)")
             if not await pg.is_visible("#modal-question"): continue
             qq = await current_q(pg)
             lesson_ok = lesson_ok and qq["id"].startswith(BIG_ID + "-")
@@ -133,14 +133,15 @@ async def main():
             rec("الحالة 4: (البنك أقل من 6 أسئلة — يغطيها اختبار المنطق)", back, f"عاد بعد {between}")
 
         # استمر حتى نهاية البنك للتحقق من عدم التكرار
-        for _ in range(30):
-            await pg.evaluate("Game._test.giveCoins(5)")
+        for _ in range(sizes[BIG] + 10):
+            await pg.evaluate("Game.player.invuln = 999; Game._test.giveCoins(5)")
             if not await pg.is_visible("#modal-question"): break
             qq = await current_q(pg)
             lesson_ok = lesson_ok and qq["id"].startswith(BIG_ID + "-")
             if qq["id"] in correct_ids: repeat_correct = True
             correct_ids.add(qq["id"]); await click_answer(pg, True); await close_q(pg)
-        rec("الحالة 2: لا يتكرر سؤال أُجيب صحيحًا خلال المرحلة", not repeat_correct and await pg.evaluate("Game.session.allCorrect()"))
+        ac = await pg.evaluate("[Game.session.allCorrect(), Game.session.remaining(), Game.session.size(), Game.state]")
+        rec("الحالة 2: لا يتكرر سؤال أُجيب صحيحًا خلال المرحلة", not repeat_correct and ac[0], "repeat=%s %s" % (repeat_correct, ac))
         rec("الحالة 8: جميع الأسئلة من بنك الدرس نفسه فقط", lesson_ok)
         toast = await pg.inner_text("#toast")
         rec("بعد إنهاء البنك يستمر اللعب دون تكرار", await pg.evaluate("Game.state") == "play" and "جميع أسئلة" in toast, toast)
@@ -197,7 +198,9 @@ async def main():
         g = await pg.inner_text(".result-grid") if await pg.is_visible("#modal-result") else ""
         acts = await pg.inner_text(".result-actions")
         rec("الوصول للنهاية يعرض شاشة النتائج الكاملة", okw and all(k in g for k in ["النقاط", "الذهب", "الأسئلة", "الصحيحة", "الخاطئة", "النسبة", "الأرواح المتبقية"]), "okw=%s | %s" % (okw, g.replace("\n"," ")))
-        rec("خيارات: المرحلة التالية / إعادة المرحلة / قائمة الدروس", all(k in acts for k in ["المرحلة التالية", "إعادة المرحلة", "قائمة الدروس"]))
+        is_last = await pg.evaluate("Game.lessonIndex === LESSONS.length - 1")
+        need = ["إعادة المرحلة", "قائمة الدروس"] + ([] if is_last else ["المرحلة التالية"])
+        rec("خيارات: المرحلة التالية (إن وُجدت) / إعادة المرحلة / قائمة الدروس", all(k in acts for k in need))
         prog = await pg.evaluate("JSON.parse(localStorage.getItem(GAME_CONFIG.storageKey))")
         rec("حفظ التقدم محليًا (المرحلة المكتملة، أعلى نتيجة، آخر مرحلة)", prog["lessons"][SEC_ID]["completed"] and prog["highScore"] > 0 and prog["lastLesson"] == SEC_ID)
 

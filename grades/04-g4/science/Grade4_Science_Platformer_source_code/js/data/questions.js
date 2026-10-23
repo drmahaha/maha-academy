@@ -1,7 +1,7 @@
 /* بنوك الأسئلة — بنك مستقل لكل درس. منقولة من نماذج مواقع: واجباتي، منهجي، كتبي (والملفات المرفقة من المعلمة).
    حُدّدت الإجابة من محتوى الكتاب عند غياب نموذج الإجابة، واستُبعد كل سؤال إجابته غير قاطعة.
    page: رقم صفحة الكتاب إن تم التحقق منه، وإلا null.
-   mcq: { id, type:'mcq', text, options:[4], answer:<0-3>, page, src }   tf: { id, type:'tf', text, answer:true|false, page, src } */
+   mcq: { id, type:'mcq', text, options:[3 أو 4 كما في النموذج], answer:<رقم الخيار من 0>, page, src }   tf: { id, type:'tf', text, answer:true|false, page, src } */
 window.SOURCES = {
   "P1": {
     "site": "منهجي",
