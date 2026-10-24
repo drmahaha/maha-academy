@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<meta name="theme-color" content="#4b2a8c">
+<title>مغامرة العلوم – الصف الخامس | أكاديمية مها</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="app">
+
+  <!-- ===== شاشة البداية ===== -->
+  <section id="screen-start" class="screen active" aria-label="شاشة البداية">
+    <div class="start-sky"><span class="cl c1"></span><span class="cl c2"></span><span class="cl c3"></span></div>
+    <div class="start-wrap">
+      <div class="top-actions">
+        <a class="icon-btn academy-home" href="#" title="أكاديمية مها">🏫</a>
+        <button class="icon-btn sound-btn" type="button" title="تشغيل / كتم الصوت">🔊</button>
+      </div>
+      <img class="logo" src="assets/logo.webp" alt="أكاديمية مها">
+      <h1 class="game-title"><span id="title-game"></span></h1>
+      <p class="game-sub"><span id="title-subject"></span> – <span id="title-grade"></span> · <span id="title-term"></span></p>
+      <div class="start-chars" aria-hidden="true">
+        <img src="assets/chars/maya.webp" alt=""><img src="assets/chars/marya.webp" alt=""><img src="assets/chars/mahir.webp" alt=""><img src="assets/chars/malik.webp" alt="">
+      </div>
+      <div class="start-buttons">
+        <button id="btn-play" class="btn btn-gold btn-xl" type="button">▶ ابدأ اللعب</button>
+        <button id="btn-continue" class="btn btn-green" type="button" hidden>متابعة: <span></span></button>
+        <button id="btn-change-char" class="btn btn-ghost" type="button" hidden>تغيير الشخصية</button>
+      </div>
+      <div class="howto">
+        <div class="howto-card">
+          <h3>🎮 التحكم</h3>
+          <p><b>الجوال والآيباد:</b> زر ◀ و ▶ للحركة، وزر القفز ⤒.</p>
+          <p><b>الكمبيوتر:</b> الأسهم ← → للحركة، والمسافة أو ↑ للقفز.</p>
+        </div>
+        <div class="howto-card">
+          <h3>🪙 الذهبيات والأسئلة</h3>
+          <p>كل <b>5 ذهبيات</b> = سؤال من الدرس. الإجابة الصحيحة تمنحك <b>+50</b> نقطة.</p>
+          <p>الإجابة الخاطئة تُفقدك روحًا، وسيعود السؤال لاحقًا.</p>
+        </div>
+        <div class="howto-card">
+          <h3>❤️ الأرواح</h3>
+          <p>تبدأ بـ <b>3 أرواح</b>. احذر الحفر والشوك والميكروبات (اقفز فوقها لتهزمها!).</p>
+          <p>عند خسارة روح يظهر سؤال، ثم تعود لآخر علم حفظ.</p>
+        </div>
+      </div>
+      <p class="teacher-line" hidden></p>
+    </div>
+  </section>
+
+  <!-- ===== اختيار الشخصية ===== -->
+  <section id="screen-char" class="screen" aria-label="اختيار الشخصية">
+    <div class="panel-wrap">
+      <div class="bar">
+        <button class="btn btn-ghost btn-sm" data-go="start" type="button">→ رجوع</button>
+        <h2>اختر شخصيتك</h2>
+        <button class="icon-btn sound-btn" type="button" title="تشغيل / كتم الصوت">🔊</button>
+      </div>
+      <div class="char-grid" role="radiogroup" aria-label="الشخصيات"></div>
+      <button id="btn-confirm-char" class="btn btn-gold btn-lg" type="button" disabled>تأكيد الشخصية والبدء</button>
+    </div>
+  </section>
+
+  <!-- ===== اختيار الدرس ===== -->
+  <section id="screen-lessons" class="screen" aria-label="اختيار الدرس">
+    <div class="panel-wrap wide">
+      <div class="bar">
+        <button class="btn btn-ghost btn-sm" data-go="start" type="button">→ البداية</button>
+        <h2>اختر الدرس</h2>
+        <div class="bar-end">
+          <button id="lessons-char" class="char-chip" type="button" title="تغيير الشخصية"><img alt=""><span></span></button>
+          <button class="icon-btn sound-btn" type="button" title="تشغيل / كتم الصوت">🔊</button>
+        </div>
+      </div>
+      <div class="best-line"></div>
+      <div id="lesson-list"></div>
+    </div>
+  </section>
+
+  <!-- ===== اللعب ===== -->
+  <section id="screen-game" class="screen" aria-label="اللعب">
+    <header class="hud">
+      <div class="hud-group">
+        <button id="btn-pause" class="hud-btn" type="button" title="إيقاف مؤقت">⏸</button>
+        <button class="hud-btn sound-btn" type="button" title="تشغيل / كتم الصوت">🔊</button>
+      </div>
+      <div class="hud-title">
+        <span class="hud-subject"></span>
+        <span class="hud-lesson"></span>
+      </div>
+      <div class="hud-group stats">
+        <span class="hud-stat lives" title="الأرواح"></span>
+        <span class="hud-stat coins" title="الذهبيات">🪙 <b>0</b></span>
+        <span class="hud-stat score" title="النقاط">⭐ <b>0</b></span>
+      </div>
+    </header>
+    <div class="stage">
+      <canvas id="game-canvas"></canvas>
+      <div class="teacher-badge" hidden></div>
+      <div class="touch-controls" aria-hidden="true">
+        <div class="tc-move">
+          <button class="tc-btn" data-key="left" type="button">◀</button>
+          <button class="tc-btn" data-key="right" type="button">▶</button>
+        </div>
+        <button class="tc-btn tc-jump" data-key="jump" type="button">⤒</button>
+      </div>
+      <div class="rotate-hint">📱↻ للعب أفضل أدر جهازك أفقيًا</div>
+      <div id="toast" role="status" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <!-- ===== نافذة السؤال ===== -->
+  <div id="modal-question" class="modal" role="dialog" aria-modal="true" aria-labelledby="q-text" hidden>
+    <div class="q-card">
+      <div class="q-head">
+        <span class="q-reason"></span>
+        <span class="q-type"></span>
+      </div>
+      <p id="q-text" class="q-text"></p>
+      <div class="q-options"></div>
+      <div class="q-feedback" aria-live="assertive"></div>
+      <button class="btn btn-gold q-continue" type="button" hidden>متابعة اللعب ◀</button>
+      <div class="q-foot" hidden>
+        <span class="q-teacher"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== الإيقاف المؤقت ===== -->
+  <div id="modal-pause" class="modal" role="dialog" aria-modal="true" hidden>
+    <div class="menu-card">
+      <h2>⏸ استراحة</h2>
+      <button class="btn btn-gold btn-lg" data-act="resume" type="button">متابعة اللعب</button>
+      <button class="btn btn-green" data-act="restart" type="button">إعادة المرحلة</button>
+      <button class="btn btn-blue" data-act="lessons" type="button">قائمة الدروس</button>
+      <button class="btn btn-ghost" data-act="char" type="button">تغيير الشخصية</button>
+      <a class="btn btn-ghost academy-home" href="#">🏫 أكاديمية مها</a>
+    </div>
+  </div>
+
+  <!-- ===== النتائج ===== -->
+  <div id="modal-result" class="modal" role="dialog" aria-modal="true" hidden>
+    <div class="menu-card result-card">
+      <img class="result-char" alt="">
+      <h2 class="result-title"></h2>
+      <p class="result-lesson"></p>
+      <div class="result-grid"></div>
+      <div class="result-actions"></div>
+      <p class="teacher-line" hidden></p>
+    </div>
+  </div>
+</div>
+
+<script src="js/config.js"></script>
+<script src="js/data/lessons.js"></script>
+<script src="js/data/questions.js"></script>
+<script src="js/questions.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/level-gen.js"></script>
+<script src="js/render.js"></script>
+<script src="js/game.js"></script>
+<script src="js/ui.js"></script>
+</body>
+</html>
